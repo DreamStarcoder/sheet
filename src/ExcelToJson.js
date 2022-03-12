@@ -18,11 +18,9 @@ class ExcelToJson extends React.Component {
   filePathset(e) {
     e.stopPropagation();
     e.preventDefault();
-    var file = e.target.files[0];
-    console.log(file);
+    var file = e.target.files[0]
     this.setState({ file });
 
-    console.log(this.state.file);
   }
 
   readFile() {
@@ -38,34 +36,34 @@ class ExcelToJson extends React.Component {
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
-      const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
       /* Update state */
-      console.log("Data>>>" + data);// shows that excel data is read
-      console.log(this.convertToJson(data)); // shows data in json format
+      let arr=(this.convertToJson(data)); // shows data in json format
+      console.log(arr)
+
     };
     reader.readAsBinaryString(f);
   }
 
   convertToJson(csv) {
-    var lines = csv.split("\n");
-
-    var result = [];
-
-    var headers = lines[0].split(",");
-
-    for (var i = 1; i < lines.length; i++) {
-      var obj = {};
-      var currentline = lines[i].split(",");
-
-      for (var j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentline[j];
-      }
-
-      result.push(obj);
-    }
-
+    
+    
     //return result; //JavaScript object
-    return JSON.stringify(result); //JSON
+    let processed=[]
+
+    csv.forEach((element,index) => {
+      if(index!=0 ){
+       let obj={}
+      if(element[2]!==0 ||element[3]!==0){
+       obj['ACCID']=element[0]
+       obj['ACCDESC']=element[1]
+       obj['Amounts']=element[2]!==0?element[2]:-element[3]
+       processed.push(obj)
+      }
+      }
+      
+    });
+    return processed; //JSON
   }
 
   render() {
