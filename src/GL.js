@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import { Button,Timeline,Menu, Dropdown, message  } from 'antd';
 import 'antd/dist/antd.css';
 import { SmileOutlined } from '@ant-design/icons';
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 let GL=()=>  {
 let [fsY,setfsY]=useState('')    
@@ -18,6 +19,14 @@ let [data1,setData1] = useState([])
 let [data2,setData2] = useState([])
 let [filtered,setfilterd] = useState([])
 
+let count=(rng)=>{
+  let data='00000000'+rng
+  if(data.length>10){
+    data=data.substring(data.length-10,data.length)
+  }
+  console.log(data)
+  return data
+}
 let  filePathset=(e,step)=> {
     e.stopPropagation();
     e.preventDefault();
@@ -202,16 +211,18 @@ let step2=(csv)=> {
         <Button
           onClick={() => {
             try {
-              let data=[]  
+              let data=[] 
+              let rng=0
               for (var item in data1) {
               if(data1[item].ACCTDESC && data1[item].Amounts!=-0){
-              let found= data2.find(element=>data1[item].ACCTDESC==element.ACCTDESC)
+              let found= data2.find(element=>data1[item].ACCTDESC.trim()==element.ACCTDESC.trim())
+              rng+=20
               if(found){
                data.push({
                 BATCHNBR:'000100',
                 JOURNALID:'00001',
-                TRANSNBR:'0000000020', 
-                ACCTID:found.ACCTID,
+                TRANSNBR:count(rng), 
+                ACCTID:CodeY+found.ACCTID.slice(2),
                 TRANSAMT:data1[item].Amounts,
                 TRANSDESC:'Opening Balances',
                 TRANSREF:'Opening Balances'
@@ -220,7 +231,7 @@ let step2=(csv)=> {
                 data.push({
                   BATCHNBR:'000100',
                   JOURNALID:'00001',
-                  TRANSNBR:'0000000020',
+                  TRANSNBR:count(rng),
                   ACCTID:`${CodeY}${data1[item].ACCTID}`,
                   TRANSAMT:data1[item].Amounts,
                   TRANSDESC:'Opening Balances',
@@ -232,6 +243,7 @@ let step2=(csv)=> {
             setfilterd(data)
             message.success('Mapping Done successfully')
             } catch (error) {
+              console.log(error)
               message.error("failed")
             }
          
@@ -243,9 +255,11 @@ let step2=(csv)=> {
         <br />
         <Button onClick={()=>{
         try {
+          let date=new Date()
           const ws = XLSX.utils.json_to_sheet([{
             BATCHID:'000100',BTCHENTRY:"00001",
-            SRCELEDGER:"AR",SRCETYPE:"IN",FSCSYR:fsY,FSCSPERD:PeriodF,JRNLDESC:"Ship asap",DOCDATE:""
+            SRCELEDGER:"GL",SRCETYPE:"JE",FSCSYR:fsY,FSCSPERD:PeriodF,JRNLDESC:"Ship asap",
+            DOCDATE:`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
           }])
           const ws1 = XLSX.utils.json_to_sheet(filtered)
           const ws2 = XLSX.utils.json_to_sheet([{
