@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button,Steps } from 'antd';
+import { Button,Timeline,Menu, Dropdown, message  } from 'antd';
 import 'antd/dist/antd.css';
-import { UploadOutlined } from '@ant-design/icons';
-const { Step } = Steps;
+import { SmileOutlined } from '@ant-design/icons';
+
 let GL=()=>  {
+let [fsY,setfsY]=useState('')    
+let [CodeY,setCode]=useState('')    
+let [PeriodF,setPeriodF]=useState('')    
+let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
+let Period=["01","02","03","04"]
+let FiscalYear=["2023","2022","2021","2022","2019"]
 let [file,setfile] = useState('')
 let [file2,setfile2] = useState('')
 let [data1,setData1] = useState([])
 let [data2,setData2] = useState([])
 let [filtered,setfilterd] = useState([])
-      
+
 let  filePathset=(e,step)=> {
     e.stopPropagation();
     e.preventDefault();
@@ -65,7 +71,7 @@ let step1=(csv)=> {
        
     });
     setData1(processed)
-    return processed; //JSON
+    message.success('File processed')
   }
 let step2=(csv)=> {
     //return result; //JavaScript object
@@ -81,11 +87,41 @@ let step2=(csv)=> {
         }
     })
     setData2(processed)
-    return processed; //JSON
+    message.success('File processed')
   } 
  
     return (
-      <div className="">
+      <div>
+        <h1 style={{backgroundColor:'beige',margin:'2%',fontFamily:'fantasy',padding:4,color:'blueviolet'}}>GL Sheet-Convertor</h1>
+        <div className="main">
+        <div>
+        <Timeline>
+    <Timeline.Item color="green">Steps To be Followed</Timeline.Item>
+    <Timeline.Item color="green">Step One</Timeline.Item>
+    <Timeline.Item color="red">
+      <p>Select GL Trail Balances Sheet</p>
+      <p>Click Button Process</p>
+    </Timeline.Item>
+    <Timeline.Item color="green">
+      <p>Step Two</p>
+    </Timeline.Item>
+    <Timeline.Item color="red">
+      <p>Select GL testing Account Sheet</p>
+      <p>Click Button Process</p>
+    </Timeline.Item>
+    <Timeline.Item color="green">
+      <p>Step Three</p>
+    </Timeline.Item>
+    <Timeline.Item color="red">
+      <p>Select Company-Code,Fiscal-Year & Period</p>
+      <p>Click Match Button</p>
+    </Timeline.Item>
+    <Timeline.Item color="#00CCFF" dot={<SmileOutlined />}>
+      <p>Create Sage GL import Sheet</p>
+    </Timeline.Item>
+  </Timeline>
+        </div>
+        <div>
         <input
           type="file"
           onChange={(e)=>{filePathset(e,1)}}
@@ -105,7 +141,7 @@ let step2=(csv)=> {
           onChange={(e)=>{filePathset(e,2)}}
         />
          <br />
-         <br />
+
         <Button
           onClick={() => {
           //  readFile();
@@ -115,39 +151,90 @@ let step2=(csv)=> {
           Process File
         </Button>
         <br />
+        <div>
+          <br />
+        <Dropdown.Button
+        style={{ float: 'right' }}
+        overlay={<Menu>
+          {
+            FiscalYear.map((element)=>{
+              return <Menu.Item onClick={()=>{
+               setfsY(element)
+              }}>{element}</Menu.Item>
+            })
+          }
+        </Menu>}
+      >Fiscal Year</Dropdown.Button>
+         <Dropdown.Button
+        style={{ float: 'right' }}
+        overlay={<Menu>
+          {
+            Company.map(element=>{
+              return <Menu.Item onClick={()=>{
+                setCode(element)
+              }}>{element}</Menu.Item>
+            })
+          }
+        </Menu>}
+      >
+        Company Code
+      </Dropdown.Button>
+      <Dropdown.Button
+        style={{ float: 'right' }}
+        overlay={<Menu>
+          {
+            Period.map(element=>{
+              return <Menu.Item onClick={()=>{
+                setPeriodF(element)
+              }}>{element}</Menu.Item>
+            })
+          }
+        </Menu>}
+      >
+        Fiscal Period
+      </Dropdown.Button>
+      <br/>
+      <p>Company-Code {CodeY} ______ Fiscal-Year {fsY}___ Fiscal-Period {PeriodF}</p>
+        </div>
+     
         <br />
       
         <Button
           onClick={() => {
-          let data=[]  
-            for (var item in data1) {
-            if(data1[item].ACCTDESC && data1[item].Amounts!=-0){
-            let found= data2.find(element=>data1[item].ACCTDESC==element.ACCTDESC)
-            if(found){
-             data.push({
-              BATCHNBR:'ABC',
-              JOURNALID:'ABC',
-              TRANSNBR:'ABC', 
-              ACCTID:found.ACCTID,
-              TRANSAMT:data1[item].Amounts,
-              TRANSDESC:'Opening Balances',
-              TRANSREF:'Opening Balances'
-            })
-            }else{
-              data.push({
-                BATCHNBR:'ABC',
-                JOURNALID:'ABC',
-                TRANSNBR:'ABC',
-                ACCTID:`02${data1[item].ACCTID}`,
+            try {
+              let data=[]  
+              for (var item in data1) {
+              if(data1[item].ACCTDESC && data1[item].Amounts!=-0){
+              let found= data2.find(element=>data1[item].ACCTDESC==element.ACCTDESC)
+              if(found){
+               data.push({
+                BATCHNBR:'000100',
+                JOURNALID:'00001',
+                TRANSNBR:'0000000020', 
+                ACCTID:found.ACCTID,
                 TRANSAMT:data1[item].Amounts,
                 TRANSDESC:'Opening Balances',
                 TRANSREF:'Opening Balances'
               })
+              }else{
+                data.push({
+                  BATCHNBR:'000100',
+                  JOURNALID:'00001',
+                  TRANSNBR:'0000000020',
+                  ACCTID:`${CodeY}${data1[item].ACCTID}`,
+                  TRANSAMT:data1[item].Amounts,
+                  TRANSDESC:'Opening Balances',
+                  TRANSREF:'Opening Balances'
+                })
+              }
+              }
             }
+            setfilterd(data)
+            message.success('Mapping Done successfully')
+            } catch (error) {
+              message.error("failed")
             }
-          }
-          
-          setfilterd(data)
+         
         }}
         >
          Match Account
@@ -155,17 +242,35 @@ let step2=(csv)=> {
         <br />
         <br />
         <Button onClick={()=>{
-
-          const ws = XLSX.utils.json_to_sheet(filtered)
+        try {
+          const ws = XLSX.utils.json_to_sheet([{
+            BATCHID:'000100',BTCHENTRY:"00001",
+            SRCELEDGER:"AR",SRCETYPE:"IN",FSCSYR:fsY,FSCSPERD:PeriodF,JRNLDESC:"Ship asap",DOCDATE:""
+          }])
+          const ws1 = XLSX.utils.json_to_sheet(filtered)
+          const ws2 = XLSX.utils.json_to_sheet([{
+            BATCHNBR:"",JOURNALID:"",	
+            TRANSNBR:"",OPTFIELD:"",VALUE:"",TYPE:"",LENGTH:"",
+            DECIMALS:"",ALLOWNULL:"",VALIDATE:"",SWSET:"",VALINDEX:"",VALIFTEXT:"",
+            VALIFMONEY:"",VALIFNUM:"",VALIFLONG:"",VALIFBOOL:"",VALIFDATE:"",VALIFTIME:"",FDESC:"",VDESC:""
+          }])
           const wb = XLSX.utils.book_new();
+
           XLSX.utils.book_append_sheet(wb, ws, "Journal_Headers");
-          XLSX.utils.book_append_sheet(wb, ws, "Journal_Details");
-          XLSX.utils.book_append_sheet(wb, ws, "Journal_Detail_Optional_Fields");
-          XLSX.writeFile(wb,'./test.xlsx')
+          XLSX.utils.book_append_sheet(wb, ws1, "Journal_Details");
+          XLSX.utils.book_append_sheet(wb, ws2, "Journal_Detail_Optional_Fields");
+          XLSX.writeFile(wb,'./test.xls')
+          message.success('Successful')
+        } catch (error) {
+          message.error('Failed')
+        }
         }} >
           GL import
         </Button>
+        </div>
       </div>
+      </div>
+     
     );
 }
 
