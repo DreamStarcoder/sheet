@@ -1,9 +1,10 @@
 
 import './App.css';
 
-import ExcelToJson from './ExcelToJson';
 import { Tabs } from 'antd';
 import GL from './GL';
+import AR from './AR';
+import AP from './AP';
 
 const { TabPane } = Tabs;
 
@@ -17,11 +18,11 @@ function App() {
     <TabPane tab="GL Portion" key="1">
     <GL/>
     </TabPane>
-    <TabPane tab="AP Portion" key="2">
-      Content of Tab Pane 2
+    <TabPane tab="AR Portion" key="2">
+     <AR />
     </TabPane>
-    <TabPane tab="AR Portion" key="3">
-      Content of Tab Pane 3
+    <TabPane tab="AP Portion" key="3">
+      <AP />
     </TabPane>
   </Tabs>
      

@@ -1,175 +1,199 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button,Steps } from 'antd';
-import 'antd/dist/antd.css';
-import { UploadOutlined } from '@ant-design/icons';
-const { Step } = Steps;
-let GL=()=>  {
+import { Button, Divider, Space, Steps } from "antd";
+import "antd/dist/antd.css";
 
-let [file3,setfile3] = useState('')
-let [file4,setfile4] = useState('')
+let AR = () => {
+  let [file3, setfile3] = useState("");
+  let [file4, setfile4] = useState("");
 
-let [data4,setData4] = useState([])
-let [filtered,setfilterd] = useState([])
-
-      
-let  filePathset=(e,step)=> {
+  let filePathset = (e, step) => {
     e.stopPropagation();
     e.preventDefault();
-    var f = e.target.files[0]
-   if(step==3){
-     setfile3(f)
-    }else if(step==4){
-     setfile4(f)
+    var f = e.target.files[0];
+    if (step == 3) {
+      setfile3(f);
+    } else if (step == 4) {
+      setfile4(f);
     }
-  }
+  };
 
-const handleUpload = (step,f) => {
+  const handleUpload = (step, f) => {
     var reader = new FileReader();
-    reader.onload = function (e) {
+    return new Promise((resolve,reject)=>{
+      reader.onload = function (e) {
         var data = e.target.result;
-        let readedData = XLSX.read(data, {type: 'binary', cellDates: true,raw:false});
+        let readedData = XLSX.read(data, {
+          type: "binary",
+          cellDates: true,
+          raw: false,
+        });
         const wsname = readedData.SheetNames[0];
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
-        const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
-        if(step==3){
-          console.log(step3(dataParse))
-        }else{
-          console.log(step4(dataParse))
+        const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        if (step == 3) {
+          resolve(step3(dataParse));
+        } else {
+          resolve(step4(dataParse));
         }
-    };
-    reader.readAsBinaryString(f)
-}
+      };
+      reader.readAsBinaryString(f);
+    })
+  
+  };
 
-
-let step3=(csv)=> {
+  let step3 = (csv) => {
     //return result; //JavaScript object
-    let processed=[]
-    let check=false
-    let customer=''
-    csv.map(element=>{
-      if(check){
-        if(element.length==1){
-          if(element[0].length>0 && !element[0].includes('Generated On')){
-            customer=element[0]
+    let processed = [];
+    let check = false;
+    let customer = "";
+    csv.map((element) => {
+      if (check) {
+        if (element.length == 1) {
+          if (element[0].length > 0 && !element[0].includes("Generated On")) {
+            customer = element[0];
           }
-        }else{
-            if(!element[0] && element[1]){
-             processed.push({
-               IDCUST:customer,
-               IDINVC:element[1],
-               DATEINVC:(element[3].getMonth()+1)+'-'+(element[3].getDate()+1)+'-'+element[3].getFullYear(),
-               AMTDIST:element[5]
-              })
-            }
-
+        } else {
+          if (!element[0] && element[1]) {
+            processed.push({
+              IDCUST: customer,
+              IDINVC: element[1],
+              DATEINVC:
+                element[3].getMonth() +
+                1 +
+                "-" +
+                (element[3].getDate() + 1) +
+                "-" +
+                element[3].getFullYear(),
+              AMTDIST: element[5],
+            });
+          }
         }
       }
-      if(element.length>3 && element[1]===" Source"){
-        console.log(element)
-        check=true
-      } 
-    })
-   setData3(processed)
+      if (element.length > 3 && element[1] === " Source") {
+        console.log(element);
+        check = true;
+      }
+    });
+
     return processed; //JSON
-  } 
-let step4=(csv)=> {
+  };
+  let step4 = (csv) => {
     //return result; //JavaScript object
-    let processed=[]
-    let check=false
-
-    csv.forEach((element,index) => {
-        if(index!==0){
-          processed.push({
-            IDCUST:element[0],
-            NAMECUST:element[3],
-          })
-        }
-    })
-    setData4(processed)
+    let processed = [];
+    csv.forEach((element, index) => {
+      if (index !== 0) {
+        processed.push({
+          IDCUST: element[0],
+          NAMECUST: element[3],
+        });
+      }
+    });
     return processed; //JSON
-  }    
-  
+  };
 
-    return (
-      <div className="">
-        <input
-          type="file"
-          onChange={(e)=>{filePathset(e,3)}}
-        />
-        <Button
-          onClick={() => {
-          //  readFile();
-          handleUpload(3,file3)
-          }}
-        >
-          Process Ar File
-        </Button>
-        <input
-          type="file"
-          onChange={(e)=>{filePathset(e,4)}}
-        />
-        <Button
-          onClick={() => {
-          //  readFile();
-          handleUpload(4,file4)
-          }}
-        >
-          Process Ar-customer File
-        </Button>
-        <Button
-          onClick={() => {
-          let data=[]  
-            for (var item in data3) {
-            let found= data4.find(element=>data3[item].IDCUST==element.NAMECUST)
-            if(found){
-             data.push({
-              REQUESTID:"",
-                IDCUST:found.IDCUST,
-                TEXTTRX:1,
-                IDTRX:'',
-                VALUE:"",
-                AMTDIST:data3[item].AMTDIST,
-                DATEINVC:data3[item].DATEINVC,
-                ACCTFMTTD:"",
-                IDCUSTSHPT:"",
-                PONUMBER:""
-            })
-            }else{
-              data.push({
-                REQUESTID:"",
-                IDCUST:data3[item].IDCUST,
-                TEXTTRX:1,
-                IDTRX:'',
-                VALUE:"",
-                AMTDIST:data3[item].AMTDIST,
-                DATEINVC:data3[item].DATEINVC,
-                ACCTFMTTD:"",
-                IDCUSTSHPT:"",
-                PONUMBER:""
-              })
-            }
-            
-          }
-          setfilterd2(data)
+  return (
+    <div>
+      <h1
+        style={{
+          backgroundColor: "beige",
+          margin: "2%",
+          fontFamily: "fantasy",
+          padding: 4,
+          color: "blueviolet",
         }}
+      >
+        AR Sheet-Convertor
+      </h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "30%",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <label>Select AR Invoices Sheet</label>
+        <input
+          type="file"
+          onChange={(e) => {
+            filePathset(e, 3);
+          }}
+        />
+
+        <label>Select AR Mapping Sheet</label>
+        <input
+          type="file"
+          onChange={(e) => {
+            filePathset(e, 4);
+          }}
+        />
+        <Divider />
+        <Button
+          onClick={() => {
+            try {
+
+              Promise.all([handleUpload(3,file3),handleUpload(2,file4)]).then(res=>{
+                if(res.length>=1){
+                  let data1 = [];
+                  let data3 = res[0];
+                  let data4 = res[1];
+                  let non_data = [];
+                  for (var item in data3) {
+                    let found = data4.find(
+                      (element) =>
+                        data3[item].IDCUST.trim() === element.NAMECUST.trim()
+                    );
+                    if (found) {
+                      data1.push({
+                        REQUESTID: "",
+                        IDCUST: found.IDCUST,
+                        TEXTTRX: 1,
+                        IDTRX: "",
+                        VALUE: "",
+                        AMTDIST: data3[item].AMTDIST,
+                        DATEINVC: data3[item].DATEINVC,
+                        ACCTFMTTD: "",
+                        IDCUSTSHPT: "",
+                        PONUMBER: "",
+                      });
+                    } else {
+                      non_data.push({
+                        REQUESTID: "",
+                        IDCUST: data3[item].IDCUST,
+                        TEXTTRX: 1,
+                        IDTRX: "",
+                        VALUE: "",
+                        AMTDIST: data3[item].AMTDIST,
+                        DATEINVC: data3[item].DATEINVC,
+                        ACCTFMTTD: "",
+                        IDCUSTSHPT: "",
+                        PONUMBER: "",
+                      });
+                    }
+                  }
+    
+                 
+                    const ws = XLSX.utils.json_to_sheet(data1);
+                    const ws1 = XLSX.utils.json_to_sheet(non_data);
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "match");
+                    XLSX.utils.book_append_sheet(wb, ws1, "non match");
+                    XLSX.writeFile(wb, "AR.xlsx");
+                }
+              })
+             
+            } catch (err) {}
+          }}
         >
-         Match Account
+          Process Sheets for Sage AR Import
         </Button>
-        <Button onClick={()=>{
-
-const ws = XLSX.utils.json_to_sheet(filtered2)
-const wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, "sheet 1");
-
-XLSX.writeFile(wb,'./test.xlsx')
-}} >
-AR import
-</Button>
       </div>
-    );
-}
+    </div>
+  );
+};
 
-export default GL;
+export default AR;
