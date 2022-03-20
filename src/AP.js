@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button, Divider, message, Steps } from "antd";
+import { Button, Divider, message,Menu, Dropdown } from "antd";
 import "antd/dist/antd.css";
 
 let AP = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
+  let [CodeY,setCode]=useState('')    
+
+  let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
 
   
-
   let filePathset = (e, step) => {
     e.stopPropagation();
     e.preventDefault();
@@ -63,12 +65,9 @@ let AP = () => {
               IDVENDOR: vendor,
               IDINVC: element[1],
               DATEINVC:
-                element[3].getMonth() +
-                1 +
-                "-" +
-                (element[3].getDate() + 1) +
-                "-" +
-                element[3].getFullYear(),
+              element[3].getFullYear()+"-" +
+              (element[3].getMonth()+1) +
+              "-" +(element[3].getDate()+1),
               AMTDIST: element[5],
             });
           }
@@ -130,6 +129,20 @@ let AP = () => {
             filePathset(e, 4);
           }}
         />
+          <Dropdown.Button
+        style={{ float: 'right' }}
+        overlay={<Menu>
+          {
+            Company.map(element=>{
+              return <Menu.Item onClick={()=>{
+                setCode(element)
+              }}>{element}</Menu.Item>
+            })
+          }
+        </Menu>}
+      >
+        Company Code
+      </Dropdown.Button>
        <Divider/>
         <Button
           style={{width:200,marginRight:'auto',marginLeft:'auto'}}
@@ -151,15 +164,15 @@ let AP = () => {
                       data1.push({
                         IDVEND: found.IDVENDOR,
                         IDINVC: data3[item].IDINVC,
-                        TEXTTRX: "",
-                        IDTRX: "",
+                        TEXTTRX:data3[item].AMTDIST<0?3:1,
+                        IDTRX: data3[item].AMTDIST<0?32:12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST,
+                        AMTDIST:data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        DATEDUE: "",
-                        ACCTFMTTD: "",
-                        CODETAXGRP: "",
-                        CODETAX1: "",
+                        DATEDUE: data3[item].DATEINVC,
+                        ACCTFMTTD: CodeY+"-9999",
+                        CODETAXGRP: "HSTONT",
+                        CODETAX1: "HSTON",
                         CODETAX2: "",
                         CODETAX3: "",
                         CODETAX4: "",
@@ -168,7 +181,7 @@ let AP = () => {
                         TAXCLASS2: "",
                         TAXCLASS3: "",
                         TAXCLASS4: "",
-                        TAXCLASS5: "",
+                        TAXCLASS5: "HSTON",
                         AccountingCode: "",
                         PONUMBER: "",
                         TAXBASE1: "",
@@ -188,15 +201,15 @@ let AP = () => {
                       non_data.push({
                         IDVEND: data3[item].IDVENDOR,
                         IDINVC: data3[item].IDINVC,
-                        TEXTTRX: "",
-                        IDTRX: "",
+                        TEXTTRX:data3[item].AMTDIST<0?3:1,
+                        IDTRX: data3[item].AMTDIST<0?32:12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST,
+                        AMTDIST:data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        DATEDUE: "",
-                        ACCTFMTTD: "",
-                        CODETAXGRP: "",
-                        CODETAX1: "",
+                        DATEDUE: data3[item].DATEINVC,
+                        ACCTFMTTD: CodeY+"-9999",
+                        CODETAXGRP: "HSTONT",
+                        CODETAX1: "HSTON",
                         CODETAX2: "",
                         CODETAX3: "",
                         CODETAX4: "",
@@ -205,7 +218,7 @@ let AP = () => {
                         TAXCLASS2: "",
                         TAXCLASS3: "",
                         TAXCLASS4: "",
-                        TAXCLASS5: "",
+                        TAXCLASS5: "HSTON",
                         AccountingCode: "",
                         PONUMBER: "",
                         TAXBASE1: "",

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button,Timeline,Menu, Dropdown, message, Divider  } from 'antd';
+import { Button,Menu, Dropdown, message, Divider  } from 'antd';
 import 'antd/dist/antd.css';
-import { SmileOutlined } from '@ant-design/icons';
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
+
 
 let GL=()=>  {
 let [fsY,setfsY]=useState('')    

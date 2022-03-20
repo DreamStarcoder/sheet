@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button, Divider, Space, Steps } from "antd";
+import { Button, Divider,Menu, Dropdown  } from "antd";
 import "antd/dist/antd.css";
 
 let AR = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
+  let [CodeY,setCode]=useState('')    
+
+  let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
 
   let filePathset = (e, step) => {
     e.stopPropagation();
@@ -61,13 +64,10 @@ let AR = () => {
               IDCUST: customer,
               IDINVC: element[1],
               DATEINVC:
-                element[3].getMonth() +
-                1 +
-                "-" +
-                (element[3].getDate() + 1) +
-                "-" +
-                element[3].getFullYear(),
-              AMTDIST: element[5],
+                element[3].getFullYear()+"-" +
+                (element[3].getMonth()+1) +
+                "-" +(element[3].getDate()+1) ,
+                AMTDIST: element[5],
             });
           }
         }
@@ -131,6 +131,20 @@ let AR = () => {
             filePathset(e, 4);
           }}
         />
+          <Dropdown.Button
+        style={{ float: 'right' }}
+        overlay={<Menu>
+          {
+            Company.map(element=>{
+              return <Menu.Item onClick={()=>{
+                setCode(element)
+              }}>{element}</Menu.Item>
+            })
+          }
+        </Menu>}
+      >
+        Company Code
+      </Dropdown.Button>
         <Divider />
         <Button
           onClick={() => {
@@ -151,12 +165,12 @@ let AR = () => {
                       data1.push({
                         REQUESTID: "",
                         IDCUST: found.IDCUST,
-                        TEXTTRX: 1,
-                        IDTRX: "",
+                        TEXTTRX: data3[item].AMTDIST<0?3:1,
+                        IDTRX:data3[item].AMTDIST<0?32:12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST,
+                        AMTDIST: data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        ACCTFMTTD: "",
+                        ACCTFMTTD: CodeY+"-9999",
                         IDCUSTSHPT: "",
                         PONUMBER: "",
                       });
@@ -164,14 +178,14 @@ let AR = () => {
                       non_data.push({
                         REQUESTID: "",
                         IDCUST: data3[item].IDCUST,
-                        TEXTTRX: 1,
-                        IDTRX: "",
+                        TEXTTRX: data3[item].AMTDIST<0?3:1,
+                        IDTRX:data3[item].AMTDIST<0?32:12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST,
+                        AMTDIST: data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        ACCTFMTTD: "",
+                        ACCTFMTTD: CodeY+"-9999",
                         IDCUSTSHPT: "",
-                        PONUMBER: "",
+                        PONUMBER: ""
                       });
                     }
                   }
