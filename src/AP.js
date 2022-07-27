@@ -3,7 +3,8 @@ import "./App.css";
 import * as XLSX from "xlsx";
 import { Button, Divider, message,Menu, Dropdown } from "antd";
 import "antd/dist/antd.css";
-
+import moment from 'moment'
+import { Zoom } from "react-reveal";
 let AP = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
@@ -64,10 +65,7 @@ let AP = () => {
             processed.push({
               IDVENDOR: vendor,
               IDINVC: element[1],
-              DATEINVC:
-              element[3].getFullYear()+"-" +
-              (element[3].getMonth()+1) +
-              "-" +(element[3].getDate()+1),
+              DATEINVC:moment(element[3].getFullYear()+"-"+(element[3].getMonth() + 1)+"-"+(element[3].getDate()),'YYYY-MM-DD').format('YYYY-MM-DD'),
               AMTDIST: element[5],
             });
           }
@@ -94,27 +92,19 @@ let AP = () => {
   };
 
   return (
+    <Zoom>
+
+  
     <div>
       <h1
-        style={{
-          backgroundColor: "beige",
-          margin: "2%",
-          fontFamily: "fantasy",
-          padding: 4,
-          color: "blueviolet",
-        }}
+         className="title"
       >
         AP Sheet-Convertor
       </h1>
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "30%",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
+        className="convertor"
       >
+        <div>
         <label color="green">Select AP Invoices Sheet </label>
         <input
           type="file"
@@ -122,14 +112,19 @@ let AP = () => {
             filePathset(e, 3);
           }}
         />
-        <label>Select AP Mapping Vendors Sheet</label>
+        </div>
+       <div>
+
+       <label>Select AP Mapping Vendors Sheet</label>
         <input
           type="file"
           onChange={(e) => {
             filePathset(e, 4);
           }}
         />
-          <Dropdown.Button
+       </div>
+         <div>
+         <Dropdown.Button
         style={{ float: 'right' }}
         overlay={<Menu>
           {
@@ -143,9 +138,13 @@ let AP = () => {
       >
         Company Code
       </Dropdown.Button>
-       <Divider/>
+       
+         </div>
+   <div>
+   <p>Company Code is {CodeY}</p>
+   </div>
         <Button
-          style={{width:200,marginRight:'auto',marginLeft:'auto'}}
+         type="primary"
           onClick={() => {
             try {
                Promise.all([handleUpload(3, file3),handleUpload(4,file4)]).then(res=>{
@@ -158,7 +157,8 @@ let AP = () => {
                   for (var item in data3) {
                     let found = data4.find(
                       (element) =>
-                        data3[item].IDVENDOR.trim() === element.NAMEVENDOR.trim()
+                      data3[item].IDVENDOR.trim() === element.NAMEVENDOR.trim()||
+                      data3[item].IDVENDOR.trim().includes(element.NAMEVENDOR.trim())
                     );
                     if (found) {
                       data1.push({
@@ -177,11 +177,11 @@ let AP = () => {
                         CODETAX3: "",
                         CODETAX4: "",
                         CODETAX5: "",
-                        TAXCLASS1: "",
-                        TAXCLASS2: "",
-                        TAXCLASS3: "",
-                        TAXCLASS4: "",
-                        TAXCLASS5: "HSTON",
+                        TAXCLASS1: "1",
+                        TAXCLASS2: "0",
+                        TAXCLASS3: "0",
+                        TAXCLASS4: "0",
+                        TAXCLASS5: "0",
                         AccountingCode: "",
                         PONUMBER: "",
                         TAXBASE1: "",
@@ -214,11 +214,11 @@ let AP = () => {
                         CODETAX3: "",
                         CODETAX4: "",
                         CODETAX5: "",
-                        TAXCLASS1: "",
-                        TAXCLASS2: "",
-                        TAXCLASS3: "",
-                        TAXCLASS4: "",
-                        TAXCLASS5: "HSTON",
+                        TAXCLASS1: "1",
+                        TAXCLASS2: "0",
+                        TAXCLASS3: "0",
+                        TAXCLASS4: "0",
+                        TAXCLASS5: "0",
                         AccountingCode: "",
                         PONUMBER: "",
                         TAXBASE1: "",
@@ -236,7 +236,7 @@ let AP = () => {
                       });
                     }
                   }
-    
+                console.log(data1)
                     const ws = XLSX.utils.json_to_sheet(data1);
                     const ws1 = XLSX.utils.json_to_sheet(non_data);
                     const wb = XLSX.utils.book_new();
@@ -254,10 +254,11 @@ let AP = () => {
             }
           }}
         >
-          Process Sage AP Import
+          Process Sheets for Sage AP Import
         </Button>
       </div>
     </div>
+    </Zoom>
   );
 };
 

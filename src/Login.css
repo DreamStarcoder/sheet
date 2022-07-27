@@ -1,0 +1,76 @@
+
+.login_form{
+    width: 400px;
+    border: .5px solid rgb(6, 16, 23);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    margin: auto;
+    margin-top: 20vh;
+}
+.login_form label{
+    margin-left: 20px;
+}
+.login_form h1{
+    text-align: center;
+}
+.login_input_field{
+    width: 350px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid transparent;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: rgba(231, 231, 222, 0.914);
+
+}
+.login_submit_btn{
+        border: none;
+        padding: 16px 32px;
+        width: 100px;
+        text-decoration: none;
+        margin: 4px 20px;
+        cursor: pointer;
+        background-color: #11abed;
+        color: white;
+        font-size: 12px;
+        border-radius: 50px;
+}
+.login_submit_btn:hover{
+    background-color:#70b741;
+    transition: 0.2s;
+}
+@media only Screen and (max-width: 800px){
+    .login_container{
+        
+    }
+    .login_form{
+        width: 250px;
+        padding: 8px;
+    }
+    .login_form h1{
+        font-size: 20px;
+    }
+    .Label{
+        font-size: 10px;
+    }
+    .login_img{
+        width: 200px;
+        height: 100px;
+    }
+    .login_input_field{
+        width: 200px;
+        padding: 6px 10px;
+        margin: 4px 0;
+        margin-left: 10px;
+        border-radius: 5%;
+    }
+    .login_submit_btn{
+        padding: 8px 16px;
+        width: 80px;
+        margin: 4px 10px;
+        font-size: 12px;
+        border: radius 5px;
+        }
+
+}

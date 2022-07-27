@@ -3,6 +3,7 @@ import "./App.css";
 import * as XLSX from "xlsx";
 import { Button,Menu, Dropdown, message, Divider  } from 'antd';
 import 'antd/dist/antd.css';
+import { Zoom } from "react-reveal";
 
 
 let GL=()=>  {
@@ -95,29 +96,30 @@ let step2=(csv)=> {
   } 
  
     return (
+      <Zoom>
       <div>
-        <h1 style={{backgroundColor:'beige',margin:'2%',fontFamily:'fantasy',padding:4,color:'blueviolet'}}>GL Sheet-Convertor</h1>
+        <h1  
+        className="title"
+        >GL Sheet-Convertor</h1>
         <div 
-           style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "30%",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+         className="convertor"
         >
-        <label>Select GL Balances Sheet</label>
+       <div>
+       <label>Select GL Balances Sheet</label>
         <input
           type="file"
           onChange={(e)=>{filePathset(e,1)}}
         />
-        <label>Select GL Account Sheet</label>
+       </div>
+       <div>
+       <label>Select GL Account Sheet</label>
         <input
           type="file"
           onChange={(e)=>{filePathset(e,2)}}
         />
-         <br />
-        <Dropdown.Button
+       </div>
+       <div>
+       <Dropdown.Button
         style={{ float: 'right' }}
         overlay={<Menu>
           {
@@ -157,11 +159,14 @@ let step2=(csv)=> {
       >
         Fiscal Period
       </Dropdown.Button>
-      <br/>
-      <p>Company-Code {CodeY} ______ Fiscal-Year {fsY}___ Fiscal-Period {PeriodF}</p>
-        </div>
-        <Divider />
-        <Button onClick={()=>{
+       </div>
+      <div>
+      <p>Company-Code {CodeY}<br/>Fiscal-Year {fsY}<br/>Fiscal-Period {PeriodF}</p>
+      </div>
+     
+      <Button
+      type="primary"
+      onClick={()=>{
         try {
             Promise.all([handleUpload(1,file),handleUpload(2,file2)]).then(res=>{
               if(res.length>=1){
@@ -225,11 +230,14 @@ let step2=(csv)=> {
           message.error('Failed')
         }
         }} >
-          GL import
+       Process Sheets for Sage GL Import
         </Button>
+        </div>
+       
+      
 
       </div>
-     
+      </Zoom>
     );
 }
 

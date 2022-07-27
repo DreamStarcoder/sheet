@@ -1,15 +1,32 @@
 import React, { useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
-import { Button, Divider,Menu, Dropdown  } from "antd";
+import { Button, Divider, Menu, Dropdown } from "antd";
 import "antd/dist/antd.css";
-
+import moment from 'moment'
+import { Zoom } from "react-reveal";
 let AR = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
-  let [CodeY,setCode]=useState('')    
+  let [CodeY, setCode] = useState("");
 
-  let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
+  let Company = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+  ];
 
   let filePathset = (e, step) => {
     e.stopPropagation();
@@ -24,7 +41,7 @@ let AR = () => {
 
   const handleUpload = (step, f) => {
     var reader = new FileReader();
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       reader.onload = function (e) {
         var data = e.target.result;
         let readedData = XLSX.read(data, {
@@ -43,8 +60,7 @@ let AR = () => {
         }
       };
       reader.readAsBinaryString(f);
-    })
-  
+    });
   };
 
   let step3 = (csv) => {
@@ -63,11 +79,8 @@ let AR = () => {
             processed.push({
               IDCUST: customer,
               IDINVC: element[1],
-              DATEINVC:
-                element[3].getFullYear()+"-" +
-                (element[3].getMonth()+1) +
-                "-" +(element[3].getDate()+1) ,
-                AMTDIST: element[5],
+              DATEINVC:moment(element[3].getFullYear()+"-"+(element[3].getMonth() + 1)+"-"+(element[3].getDate()),'YYYY-MM-DD').format('YYYY-MM-DD'),
+              AMTDIST: element[5],
             });
           }
         }
@@ -95,27 +108,17 @@ let AR = () => {
   };
 
   return (
+    <Zoom>
     <div>
       <h1
-        style={{
-          backgroundColor: "beige",
-          margin: "2%",
-          fontFamily: "fantasy",
-          padding: 4,
-          color: "blueviolet",
-        }}
+      className="title"
       >
         AR Sheet-Convertor
       </h1>
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "30%",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
+        className="convertor"
       >
+        <div>
         <label>Select AR Invoices Sheet</label>
         <input
           type="file"
@@ -123,35 +126,52 @@ let AR = () => {
             filePathset(e, 3);
           }}
         />
-
-        <label>Select AR Mapping Sheet</label>
+        </div>
+       
+<div>
+<label>Select AR Mapping Sheet</label>
         <input
           type="file"
           onChange={(e) => {
             filePathset(e, 4);
           }}
         />
-          <Dropdown.Button
-        style={{ float: 'right' }}
-        overlay={<Menu>
-          {
-            Company.map(element=>{
-              return <Menu.Item onClick={()=>{
-                setCode(element)
-              }}>{element}</Menu.Item>
-            })
+</div>
+        <div>
+        <Dropdown.Button
+          style={{ float: "right" }}
+          overlay={
+            <Menu>
+              {Company.map((element) => {
+                return (
+                  <Menu.Item
+                    onClick={() => {
+                      setCode(element);
+                    }}
+                  >
+                    {element}
+                  </Menu.Item>
+                );
+              })}
+            </Menu>
           }
-        </Menu>}
-      >
-        Company Code
-      </Dropdown.Button>
-        <Divider />
+        >
+          Company Code
+        </Dropdown.Button>
+        </div>
+      <div>
+      <p>Company Code is {CodeY}</p>
+      </div>
+       
         <Button
+          type="primary"
           onClick={() => {
             try {
-
-              Promise.all([handleUpload(3,file3),handleUpload(2,file4)]).then(res=>{
-                if(res.length>=1){
+              Promise.all([
+                handleUpload(3, file3),
+                handleUpload(2, file4),
+              ]).then((res) => {
+                if (res.length >= 1) {
                   let data1 = [];
                   let data3 = res[0];
                   let data4 = res[1];
@@ -159,47 +179,60 @@ let AR = () => {
                   for (var item in data3) {
                     let found = data4.find(
                       (element) =>
-                        data3[item].IDCUST.trim() === element.NAMECUST.trim()
+                      data3[item].IDCUST.trim()===element.NAMECUST.trim()||
+                      data3[item].IDCUST.trim().includes(element.NAMECUST.trim()) 
+                      || element.NAMECUST.trim().includes(data3[item].IDCUST.trim())
+                       
                     );
                     if (found) {
                       data1.push({
-                        REQUESTID: "",
+                        REQUESTID: "9999",
                         IDCUST: found.IDCUST,
-                        TEXTTRX: data3[item].AMTDIST<0?3:1,
-                        IDTRX:data3[item].AMTDIST<0?32:12,
+                        TEXTTRX: data3[item].AMTDIST < 0 ? 3 : 1,
+                        IDTRX: data3[item].AMTDIST < 0 ? 32 : 12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
+                        AMTDIST:
+                          data3[item].AMTDIST < 0
+                            ? -data3[item].AMTDIST
+                            : data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        ACCTFMTTD: CodeY+"-9999",
+                        ACCTFMTTD: CodeY + "-9999",
                         IDCUSTSHPT: "",
                         PONUMBER: "",
+                        IDINVC: data3[item].IDINVC,
+                        DIVISION: "",
+                        TEXTDESC:""
                       });
                     } else {
                       non_data.push({
-                        REQUESTID: "",
+                        REQUESTID: "9999",
                         IDCUST: data3[item].IDCUST,
-                        TEXTTRX: data3[item].AMTDIST<0?3:1,
-                        IDTRX:data3[item].AMTDIST<0?32:12,
+                        TEXTTRX: data3[item].AMTDIST < 0 ? 3 : 1,
+                        IDTRX: data3[item].AMTDIST < 0 ? 32 : 12,
                         VALUE: "",
-                        AMTDIST: data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST,
+                        AMTDIST:
+                          data3[item].AMTDIST < 0
+                            ? -data3[item].AMTDIST
+                            : data3[item].AMTDIST,
                         DATEINVC: data3[item].DATEINVC,
-                        ACCTFMTTD: CodeY+"-9999",
+                        ACCTFMTTD: CodeY + "-9999",
                         IDCUSTSHPT: "",
-                        PONUMBER: ""
+                        PONUMBER: "",
+                        IDINVC:data3[item].IDINVC,
+                        DIVISION: "",
+                        TEXTDESC:""
                       });
                     }
                   }
-    
-                 
-                    const ws = XLSX.utils.json_to_sheet(data1);
-                    const ws1 = XLSX.utils.json_to_sheet(non_data);
-                    const wb = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(wb, ws, "match");
-                    XLSX.utils.book_append_sheet(wb, ws1, "non match");
-                    XLSX.writeFile(wb, "AR.xlsx");
+
+                  const ws = XLSX.utils.json_to_sheet(data1);
+                  const ws1 = XLSX.utils.json_to_sheet(non_data);
+                  const wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, ws, "match");
+                  XLSX.utils.book_append_sheet(wb, ws1, "non match");
+                  XLSX.writeFile(wb, "AR.xlsx");
                 }
-              })
-             
+              });
             } catch (err) {}
           }}
         >
@@ -207,6 +240,7 @@ let AR = () => {
         </Button>
       </div>
     </div>
+    </Zoom>
   );
 };
 

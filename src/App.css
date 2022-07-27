@@ -1,38 +1,92 @@
-.App {
-  text-align: center;
+*{
+  font-family: Quicksand, sans-serif;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.tb-logo{
+  height: 70%;
+  width: 10%;
+  background-color: aliceblue;
+  border-radius: 100%;
+  margin: 2px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.partner-logo{
+  width: 20%;
+  height: 30%;
+  align-self: center;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header{
+  height: 20vh;
+  display: flex;
+  
+}
+.license{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: fit-content;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 10px;
+  justify-content: space-around;
 }
-
-.App-link {
-  color: #61dafb;
+.logos{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  width: 80%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ant-tabs-tab-btn{
+  font-weight: bold;
+}
+.title{
+  color:rgb(102, 177, 243) ;
+  text-align: center;
+  margin-bottom: 10px;
+  background-color: aliceblue;
+  z-index: 10px;
+  border-radius: 10px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
+.convertor{
+  display: flex;
+  flex-direction: column;
+  width:fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  z-index: 20;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 10px;
+  height: 70%;
+  margin-bottom: 20px;
+}
+.convertor>div{
+  display: flex;
+  margin: 10px;
+  justify-content: space-between;
+  font-size: 1rem;
+  align-items: center;
+}
+.convertor>div label{
+  color: rgb(10, 35, 59);
+  margin-right: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #a8ec74;
+}
+.convertor>div p{
+  background-color: #0C2D48;
+  padding: 10px;
+  border-radius: 10px;
+  color: #B1D4E0;
+}
+.convertor>div input{
+ color: #B1D4E0;
+  
+}
+.ant-btn{
+  width: fit-content;
+  align-self: center;
 }
