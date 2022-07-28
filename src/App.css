@@ -79,14 +79,14 @@
   color: rgb(10, 35, 59);
   margin-right: 20px;
   padding: 10px;
-  border-radius: 10px;
-  background-color: #a8ec74;
+  
+  background-color: #e1ead9;
 }
 .convertor>div p{
-  background-color: #0C2D48;
+  background-color: #e1ead9;
   padding: 10px;
   border-radius: 10px;
-  color: #B1D4E0;
+  color: #03212a;
 }
 .convertor>div input{
  color: #B1D4E0;
