@@ -239,6 +239,10 @@ let AR = () => {
           Process Sheets for Sage AR Import
         </Button>
       </div>
+      <a href="https://agsadvanced.com/">
+       A Product of AGS Advanced Software Inc.
+        
+      </a>
     </div>
     </Zoom>
   );

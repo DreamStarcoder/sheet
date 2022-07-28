@@ -1,6 +1,10 @@
 *{
   font-family: Quicksand, sans-serif;
 }
+.App{
+  height: 100vh;
+
+}
 .tb-logo{
   height: 70%;
   width: 10%;
@@ -47,6 +51,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
+  display: none;
 }
 .convertor{
   display: flex;
@@ -61,6 +66,7 @@
   padding: 10px;
   height: 70%;
   margin-bottom: 20px;
+  margin-top: 24px;
 }
 .convertor>div{
   display: flex;
@@ -69,7 +75,7 @@
   font-size: 1rem;
   align-items: center;
 }
-.convertor>div label{
+.convertor>div label,.token{
   color: rgb(10, 35, 59);
   margin-right: 20px;
   padding: 10px;
@@ -87,6 +93,6 @@
   
 }
 .ant-btn{
-  width: fit-content;
+  
   align-self: center;
 }

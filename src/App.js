@@ -1,13 +1,13 @@
 
 import './App.css';
 
-import { Button, Divider, Tabs } from 'antd';
+import { Button, Divider, message, Tabs } from 'antd';
 import GL from './GL';
 import AR from './AR';
 import AP from './AP';
 import Login from './Login';
 import { useEffect, useState } from 'react';
-
+import moment from 'moment';
 const { TabPane } = Tabs;
 
 function callback(key) {
@@ -18,9 +18,14 @@ function App() {
   let [login,setLogin]=useState(false)
   let data=localStorage.getItem("license-expiry")
   useEffect(()=>{
-    
-    console.log(data)
-  },[])
+    if(data){
+      let currentdate=moment().format('YYYY-MM-DD')
+     if(moment(JSON.parse(data).data.expire_status,'YYYY-MM-DD').isSame(currentdate)){
+       message.error('license Expired')
+       setLogin(false)
+     }
+    }
+  })
   return (
     <div className="App">
   
@@ -28,14 +33,16 @@ function App() {
       login &&  <div>
       <div className='header'>
       <div className='license'>
-      <p>Expiry Date {JSON.parse(data).data.expire_date}</p>
-      <p>license Code {JSON.parse(data).data.code}</p>
+   
+      <p className='token'>Expiry Date {JSON.parse(data).data.expire_date}</p>
+      <p className='token'>License Code {JSON.parse(data).data.code}</p>
       <Button type='primary' onClick={()=>{
         localStorage.removeItem('license-expiry')
         setLogin(false)
       }}>Logout</Button>
-      <Button type='primary'>Refresh license</Button>
+      
       </div>  
+     
       <div className='logos'>
       <img src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
       <img src={process.env.PUBLIC_URL+'\\tblogo.png'} className="tb-logo" alt="AGS LOGO"  />
@@ -54,7 +61,9 @@ function App() {
       <TabPane tab="AP Portion" key="3">
         <AP />
       </TabPane>
+     
     </Tabs>
+    
     </div>
      }
      {

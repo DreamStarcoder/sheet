@@ -233,8 +233,10 @@ let step2=(csv)=> {
        Process Sheets for Sage GL Import
         </Button>
         </div>
-       
-      
+        <a href="https://agsadvanced.com/">
+       A Product of AGS Advanced Software Inc.
+        
+      </a>
 
       </div>
       </Zoom>

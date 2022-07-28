@@ -257,6 +257,10 @@ let AP = () => {
           Process Sheets for Sage AP Import
         </Button>
       </div>
+      <a href="https://agsadvanced.com/">
+       A Product of AGS Advanced Software Inc.
+        
+      </a>
     </div>
     </Zoom>
   );
