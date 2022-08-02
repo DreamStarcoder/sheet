@@ -9,7 +9,8 @@ let AR = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
   let [CodeY, setCode] = useState("");
-
+  let [file3Name, Setfile3Name] = useState("No file selected");
+  let [file4Name, Setfile4Name] = useState("No file selected");
   let Company = [
     "01",
     "02",
@@ -34,8 +35,12 @@ let AR = () => {
     var f = e.target.files[0];
     if (step == 3) {
       setfile3(f);
+      Setfile3Name(f.name)
     } else if (step == 4) {
+      console.log(f)
       setfile4(f);
+      Setfile4Name(f.name)
+
     }
   };
 
@@ -118,9 +123,19 @@ let AR = () => {
       <div
         className="convertor"
       >
-        <div>
-        <label>Select AR Invoices Sheet</label>
+        <div className="input">
+        <label className="label">Import AR Trial Balance</label>
+        <label
+        htmlFor="Input5"
+        className="inputLabel"
+
+        >
+       <img src="https://download.logo.wine/logo/Microsoft_Excel/Microsoft_Excel-Logo.wine.png" width="100" height="50" alt="submit" />
+        <h4>{file3Name}</h4> 
+        </label>
         <input
+          id="Input5"
+          style={{display:'none'}}
           type="file"
           onChange={(e) => {
             filePathset(e, 3);
@@ -128,10 +143,19 @@ let AR = () => {
         />
         </div>
        
-<div>
-<label>Select AR Mapping Sheet</label>
+<div className="input">
+<label className="label">Import Sage AR Customers</label>
+<label
+        htmlFor="Input6"
+        className="inputLabel"
+        >
+       <img src={process.env.PUBLIC_URL+'.//sage-logo.png'}width="100" height="50" alt="submit" />
+        <h4>{file4Name}</h4>  
+        </label>
         <input
+          id="Input6"
           type="file"
+          style={{display:'none'}}
           onChange={(e) => {
             filePathset(e, 4);
           }}
@@ -236,7 +260,7 @@ let AR = () => {
             } catch (err) {}
           }}
         >
-          Process Sheets for Sage AR Import
+          Create Sage AR Import File 
         </Button>
       </div>
       <a href="https://agsadvanced.com/">

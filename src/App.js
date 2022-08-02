@@ -32,6 +32,11 @@ function App() {
      {
       login &&  <div>
       <div className='header'>
+      <div className='logos'>
+      <img src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
+      <img src={process.env.PUBLIC_URL+'\\logo.png'} className="logo" alt="AGS LOGO"  />
+      <img src={process.env.PUBLIC_URL+'\\tblogo.png'} className="tb-logo" alt="AGS LOGO"  />
+      </div>  
       <div className='license'>
    
       <p className='token'>Expiry Date {JSON.parse(data).data.expire_date}</p>
@@ -40,25 +45,17 @@ function App() {
         localStorage.removeItem('license-expiry')
         setLogin(false)
       }}>Logout</Button>
-      
-      </div>  
-     
-      <div className='logos'>
-      <img src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
-      <img src={process.env.PUBLIC_URL+'\\tblogo.png'} className="tb-logo" alt="AGS LOGO"  />
-     
-      </div>
-     
+      </div> 
       </div>
       <Divider/>
        <Tabs tabPosition='left' defaultActiveKey="1" onChange={callback}>
-      <TabPane tab="GL Portion" key="1">
+      <TabPane tab="GL Trial Balance" key="1">
       <GL/>
       </TabPane>
-      <TabPane tab="AR Portion" key="2">
+      <TabPane tab="AR Trail Balance" key="2">
        <AR />
       </TabPane>
-      <TabPane tab="AP Portion" key="3">
+      <TabPane tab="AP Trial Balance" key="3">
         <AP />
       </TabPane>
      

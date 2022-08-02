@@ -5,12 +5,22 @@
   height: 100vh;
 
 }
+.image-upload>input {
+  display: none;
+}
+.image-upload>label img{
+  background-color: #03212a;
+  width: 200px;
+  
+}
 .tb-logo{
   height: 70%;
   width: 10%;
-  background-color: aliceblue;
   border-radius: 100%;
   margin: 2px;
+}
+.logo{
+  width: 20%;
 }
 .partner-logo{
   width: 20%;
@@ -29,13 +39,13 @@
   justify-content: center;
   padding: 10px;
   justify-content: space-around;
+  margin-top: 20px;
 }
 .logos{
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  
   width: 80%;
+  margin-left: 20px;
 }
 .ant-tabs-tab-btn{
   font-weight: bold;
@@ -75,7 +85,7 @@
   font-size: 1rem;
   align-items: center;
 }
-.convertor>div label,.token{
+ .label,.token{
   color: rgb(10, 35, 59);
   margin-right: 20px;
   padding: 10px;
@@ -88,10 +98,34 @@
   border-radius: 10px;
   color: #03212a;
 }
-.convertor>div input{
- color: #B1D4E0;
+.input{
+  
+  display: flex;
+  width: 100%;
+}
+
+.inputLabel{
+  display: flex;
+align-content: center;
+text-align: center;
+
+width: 60%;
+padding-right: 10px;
+padding-left: 10px;
+}
+.inputLabel>img{
+  margin-right: 30px;
+  align-self: center;
   
 }
+.inputLabel>h4{
+  text-align: center;
+  width: 200px;
+}
+.inputLabel>img:hover{
+  cursor: pointer;
+}
+
 .ant-btn{
   
   align-self: center;

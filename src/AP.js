@@ -8,6 +8,8 @@ import { Zoom } from "react-reveal";
 let AP = () => {
   let [file3, setfile3] = useState("");
   let [file4, setfile4] = useState("");
+  let [file3Name, Setfile3Name] = useState("No file selected");
+  let [file4Name, Setfile4Name] = useState("No file selected");
   let [CodeY,setCode]=useState('')    
 
   let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
@@ -19,10 +21,15 @@ let AP = () => {
     var f = e.target.files[0];
     if (step == 3) {
       setfile3(f);
+      Setfile3Name(f.name)
     } else if (step == 4) {
+      console.log(f)
       setfile4(f);
+      Setfile4Name(f.name)
+
     }
   };
+
 
   const handleUpload = (step, f) => {
     var reader = new FileReader();
@@ -104,20 +111,39 @@ let AP = () => {
       <div
         className="convertor"
       >
-        <div>
-        <label color="green">Select AP Invoices Sheet </label>
+        <div className="input">
+        <label color="green" className="label"> Import AP Trial Balance</label>
+        <label
+        htmlFor="myInput3"
+        className="inputLabel"
+
+        >
+       <img src="https://download.logo.wine/logo/Microsoft_Excel/Microsoft_Excel-Logo.wine.png" width="100" height="50" alt="submit" />
+        <h4>{file3Name}</h4> 
+        </label>
         <input
+          id="myInput3"
           type="file"
+          style={{ display: 'none' }}
           onChange={(e) => {
             filePathset(e, 3);
           }}
         />
         </div>
-       <div>
+       <div  className="input">
 
-       <label>Select AP Mapping Vendors Sheet</label>
+       <label className="label"> Import Sage AP Vendors</label>
+       <label
+        htmlFor="myInput4"
+        className="inputLabel"
+        >
+       <img src={process.env.PUBLIC_URL+'.//sage-logo.png'}width="100" height="50" alt="submit" />
+        <h4>{file4Name}</h4>  
+        </label>
         <input
+          id="myInput4"
           type="file"
+          style={{ display: 'none' }}
           onChange={(e) => {
             filePathset(e, 4);
           }}
@@ -254,7 +280,7 @@ let AP = () => {
             }
           }}
         >
-          Process Sheets for Sage AP Import
+          Create Sage AP Import File
         </Button>
       </div>
       <a href="https://agsadvanced.com/">

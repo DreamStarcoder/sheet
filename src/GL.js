@@ -15,7 +15,8 @@ let Period=["01","02","03","04","05","06","07","08","09","10","11","12"]
 let FiscalYear=["2023","2022","2021","2022","2019"]
 let [file,setfile] = useState('')
 let [file2,setfile2] = useState('')
-
+let [file1Name,setFile1Name]=useState('No File Selected')
+let [file2Name,setFile2Name]=useState('No File Selected')
 let count=(rng)=>{
   let data='00000000'+rng
   if(data.length>10){
@@ -28,8 +29,10 @@ let  filePathset=(e,step)=> {
     e.preventDefault();
     var f = e.target.files[0]
     if(step==1){
+      setFile1Name(f.name)
       setfile(f);
     }else if(step==2){
+    setFile2Name(f.name)
      setfile2(f)
     }
   }
@@ -105,18 +108,41 @@ let step2=(csv)=> {
          className="convertor"
         >
        <div>
-       <label>Select GL Balances Sheet</label>
-        <input
+       
+       <div className="input">
+       <label className="label">Import GL TB 3rd Party</label>
+        <label
+        htmlFor="myInput"
+        className="inputLabel"
+        >
+       <img src="https://download.logo.wine/logo/Microsoft_Excel/Microsoft_Excel-Logo.wine.png" width="100" height="50" alt="submit" />
+        <h4>{file1Name}</h4> 
+        </label>
+       <input
+          id="myInput"
           type="file"
           onChange={(e)=>{filePathset(e,1)}}
+          style={{ display: 'none' }}
         />
        </div>
-       <div>
-       <label>Select GL Account Sheet</label>
-        <input
+
+       </div>
+       <div className="input">
+       <label className="label">Import Sage GL Accounts</label>
+       <label
+        htmlFor="myInput1"
+        className="inputLabel"
+        >
+       <img src={process.env.PUBLIC_URL+'.//sage-logo.png'}width="100" height="50" alt="submit" />
+        <h4>{file2Name}</h4>  
+        </label>
+       <input
+          id="myInput1"
           type="file"
           onChange={(e)=>{filePathset(e,2)}}
+          style={{ display: 'none' }}
         />
+     
        </div>
        <div>
        <Dropdown.Button
@@ -230,7 +256,7 @@ let step2=(csv)=> {
           message.error('Failed')
         }
         }} >
-       Process Sheets for Sage GL Import
+       Create Sage GL Import File
         </Button>
         </div>
         <a href="https://agsadvanced.com/">
