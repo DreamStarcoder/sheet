@@ -115,7 +115,9 @@ let step2=(csv)=> {
         htmlFor="myInput"
         className="inputLabel"
         >
-       <img src="https://download.logo.wine/logo/Microsoft_Excel/Microsoft_Excel-Logo.wine.png" width="100" height="50" alt="submit" />
+       <img src="https://download.logo.wine/logo/Microsoft_Excel/Microsoft_Excel-Logo.wine.png" width="100" height="50" alt="submit" >
+       </img>
+       
         <h4>{file1Name}</h4> 
         </label>
        <input

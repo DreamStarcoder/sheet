@@ -42,8 +42,32 @@ function App() {
       <p className='token'>Expiry Date {JSON.parse(data).data.expire_date}</p>
       <p className='token'>License Code {JSON.parse(data).data.code}</p>
       <Button type='primary' onClick={()=>{
-        localStorage.removeItem('license-expiry')
-        setLogin(false)
+        var axios = require('axios');
+        var payload = JSON.stringify({
+          "used": false
+        });
+        console.log(JSON.parse(data))
+        var config = {
+          method: 'put',
+          url: 'https://activatewm.com/v1/license/update?_id='+
+          JSON.parse(data).data.uid
+          ,
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          data : payload
+        };
+        
+        axios(config)
+        .then(function (response) {
+          localStorage.removeItem('license-expiry')
+          setLogin(false)
+        })
+        .catch(function (error) {
+          
+        });
+        
+      
       }}>Logout</Button>
       </div> 
       </div>
