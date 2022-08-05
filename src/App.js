@@ -33,7 +33,6 @@ function App() {
       login &&  <div>
       <div className='header'>
       <div className='logos'>
-      <img src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
       <img src={process.env.PUBLIC_URL+'\\logo.png'} className="logo" alt="AGS LOGO"  />
       <img src={process.env.PUBLIC_URL+'\\tblogo.png'} className="tb-logo" alt="AGS LOGO"  />
       </div>  
@@ -90,6 +89,7 @@ function App() {
      {
       !login &&   <Login login={setLogin}/>
      }
+      <img  src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
      
     </div>
     
