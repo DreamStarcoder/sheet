@@ -203,9 +203,9 @@ let AR = () => {
                   for (var item in data3) {
                     let found = data4.find(
                       (element) =>
-                      data3[item].IDCUST.trim()===element.NAMECUST.trim()||
-                      data3[item].IDCUST.trim().includes(element.NAMECUST.trim()) 
-                      || element.NAMECUST.trim().includes(data3[item].IDCUST.trim())
+                      String(data3[item].IDCUST).trim()===String(element.NAMECUST).trim()||
+                      String(data3[item].IDCUST).trim().includes(String(element.NAMECUST).trim()) 
+                      || String(element.NAMECUST).trim().includes(String(data3[item].IDCUST).trim())
                        
                     );
                     if (found) {

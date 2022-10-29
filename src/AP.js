@@ -183,8 +183,8 @@ let AP = () => {
                   for (var item in data3) {
                     let found = data4.find(
                       (element) =>
-                      data3[item].IDVENDOR.trim() === element.NAMEVENDOR.trim()||
-                      data3[item].IDVENDOR.trim().includes(element.NAMEVENDOR.trim())
+                      String(data3[item].IDVENDOR).trim() === String(element.NAMEVENDOR).trim()||
+                      String(data3[item].IDVENDOR).trim().includes(String(element.NAMEVENDOR).trim())
                     );
                     if (found) {
                       data1.push({
