@@ -23,7 +23,6 @@ let AP = () => {
       setfile3(f);
       Setfile3Name(f.name)
     } else if (step == 4) {
-      console.log(f)
       setfile4(f);
       Setfile4Name(f.name)
 
@@ -84,14 +83,29 @@ let AP = () => {
     });
     return processed; //JSON
   };
+  
   let step4 = (csv) => {
     //return result; //JavaScript object
     let processed = [];
+    let IDVENDOR=0
+    let NAMEVENDOR=3
     csv.forEach((element, index) => {
+
+      if(index==0){
+        element?.map((item,index1)=>{
+          if(item=="IDVENDOR" ||item=="VENDORID"){
+            IDVENDOR=index1
+          }
+          if(item=="NAMEVENDOR" ||item=="VENDNAME"){
+            NAMEVENDOR=index1
+          }
+        })
+      }
       if (index !== 0) {
+
         processed.push({
-          IDVENDOR: element[0],
-          NAMEVENDOR: element[3],
+          IDVENDOR: element[IDVENDOR],
+          NAMEVENDOR: element[NAMEVENDOR],
         });
       }
     });
@@ -174,7 +188,6 @@ let AP = () => {
           onClick={() => {
             try {
                Promise.all([handleUpload(3, file3),handleUpload(4,file4)]).then(res=>{
-                console.log(res)
                 if(res.length>=1){
                   let data1 = [];
                   let data3=res[0]
@@ -262,7 +275,6 @@ let AP = () => {
                       });
                     }
                   }
-                console.log(data1)
                     const ws = XLSX.utils.json_to_sheet(data1);
                     const ws1 = XLSX.utils.json_to_sheet(non_data);
                     const wb = XLSX.utils.book_new();

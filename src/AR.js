@@ -37,7 +37,6 @@ let AR = () => {
       setfile3(f);
       Setfile3Name(f.name)
     } else if (step == 4) {
-      console.log(f)
       setfile4(f);
       Setfile4Name(f.name)
 
@@ -91,7 +90,6 @@ let AR = () => {
         }
       }
       if (element.length > 3 && element[1] === " Source") {
-        console.log(element);
         check = true;
       }
     });
@@ -101,11 +99,24 @@ let AR = () => {
   let step4 = (csv) => {
     //return result; //JavaScript object
     let processed = [];
+    let IDCUST=0
+    let NAMECUST=3
+   
     csv.forEach((element, index) => {
+      if(index==0){
+        element?.map((item,index1)=>{
+          if(item=="IDCUST"){
+               IDCUST=index1
+          }
+          if(item=="NAMECUST"){
+            NAMECUST=index1
+          }
+        })
+      }
       if (index !== 0) {
         processed.push({
-          IDCUST: element[0],
-          NAMECUST: element[3],
+          IDCUST: element[IDCUST],
+          NAMECUST: element[NAMECUST],
         });
       }
     });
@@ -201,13 +212,17 @@ let AR = () => {
                   let data4 = res[1];
                   let non_data = [];
                   for (var item in data3) {
+                    
                     let found = data4.find(
                       (element) =>
-                      String(data3[item].IDCUST).trim()===String(element.NAMECUST).trim()||
+                    {
+                      if(  String(data3[item].IDCUST).trim()===String(element.NAMECUST).trim()||
                       String(data3[item].IDCUST).trim().includes(String(element.NAMECUST).trim()) 
                       || String(element.NAMECUST).trim().includes(String(data3[item].IDCUST).trim())
-                       
-                    );
+                    ){
+                      return element
+                    }
+                    })
                     if (found) {
                       data1.push({
                         REQUESTID: "9999",
