@@ -85,6 +85,7 @@ let AR = () => {
               IDINVC: element[1],
               DATEINVC:moment(element[3].getFullYear()+"-"+(element[3].getMonth() + 1)+"-"+(element[3].getDate()),'YYYY-MM-DD').format('YYYY-MM-DD'),
               AMTDIST: element[5],
+              DATEDUE:moment(element[3].getFullYear()+"-"+(element[3].getMonth() + 1)+"-"+(element[3].getDate()),'YYYY-MM-DD').add(30,"days").format('YYYY-MM-DD')
             });
           }
         }
@@ -211,8 +212,9 @@ let AR = () => {
                   let data3 = res[0];
                   let data4 = res[1];
                   let non_data = [];
+                  let count=1
                   for (var item in data3) {
-                    
+                    console.table(data3[item])
                     let found = data4.find(
                       (element) =>
                     {
@@ -224,23 +226,133 @@ let AR = () => {
                     }
                     })
                     if (found) {
+                      //sheet1
+                      let invoiceAmount=  data3[item].AMTDIST < 0
+                           ? -data3[item].AMTDIST
+                          : data3[item].AMTDIST
                       data1.push({
-                        REQUESTID: "9999",
+                        CNTBTCH:1,
+                        CNTITEM:count,
                         IDCUST: found.IDCUST,
+                        IDINVC: data3[item].IDINVC,
+                        IDSHPT:"",
+                        SPECINST:" ",
                         TEXTTRX: data3[item].AMTDIST < 0 ? 3 : 1,
                         IDTRX: data3[item].AMTDIST < 0 ? 32 : 12,
-                        VALUE: "",
-                        AMTDIST:
-                          data3[item].AMTDIST < 0
-                            ? -data3[item].AMTDIST
-                            : data3[item].AMTDIST,
+                        ORDRNBR: "",
+                        CUSTPO:" ",
+                        INVCDESC:" ",
+                        SWPRTINVC:0,
+                        INVCAPPLTO:" ",
+                        IDACCTSET:"ARCAD",
                         DATEINVC: data3[item].DATEINVC,
+                        DATEASOF:data3[item].DATEINVC,
+                        FISCYR:"2023",
+                        FISCPER:"02",
+                        CODECURN:"CAD",
+                        RATETYPE:"SP",
+                        SWMANRTE:0,
+                        EXCHRATEHC:1,
+                        ORIGRATEHC:0,
+                        TERMCODE:"NET30",
+                        SWTERMOVRD:0,
+                        DATEDUE:data3[item].DATEDUE,
+                        DATEDISC:" ",
+                        PCTDISC:0,
+                        AMTDISCAVL:0,
+                        LASTLINE:1,
+                        CODESLSP1:"",
+                        CODESLSP2:" ",
+                        CODESLSP3:" ",
+                        CODESLSP4:" ",
+                        CODESLSP5:" ",
+                        PCTSASPLT1:0,
+                        PCTSASPLT2:0,
+                        PCTSASPLT3:0,
+                        PCTSASPLT4:0,
+                        PCTSASPLT5:0,
+                        SWTAXBL:1,
+                        SWMANTX:0,
+                        CODETAXGRP:"CANADA",
+                        CODETAX1:"CANADA",
+                        CODETAX2:"",
+                        CODETAX3:"",
+                        CODETAX4:"",
+                        CODETAX5:"",
+                        TAXSTTS1:2,
+                        TAXSTTS2:0,
+                        TAXSTTS3:0,
+                        TAXSTTS4:0,
+                        TAXSTTS5:0,
+                        BASETAX1:invoiceAmount,
+                        BASETAX2:0,
+                        BASETAX3:0,
+                        BASETAX4:0,
+                        BASETAX5:0,
+                        AMTTAX1:0,
+                        AMTTAX2:0,
+                        AMTTAX3:0,
+                        AMTTAX4:0,
+                        AMTTAX5:0,
+                        AMTTXBL:invoiceAmount,
+                        AMTNOTTXBL:0,
+                        AMTTAXTOT:0,
+                        AMTINVCTOT:invoiceAmount,
+                        AMTPPD:0,
+                        AMTPAYMTOT:1,
+                        AMTPYMSCHD:invoiceAmount,
+                        AMTNETTOT:invoiceAmount,
+                        IDSTDINVC:"",
+                        DATEPRCS:"",
+                        IDPPD:"",
+                        IDBILL:"",
+                        SHPTOLOC:"",
+                        SHPTOSTE1:" ",
                         ACCTFMTTD: CodeY + "-9999",
                         IDCUSTSHPT: "",
                         PONUMBER: "",
-                        IDINVC: data3[item].IDINVC,
-                        DIVISION: "",
-                        TEXTDESC:""
+                        SHPTOSTE2:"",
+                        SHPTOSTE3:"",
+                        SHPTOSTE4:"",
+                        SHPTOCITY:"",
+                        SHPTOSTTE:"",
+                        SHPTOPOST:"",
+                        SHPTOCTRY:"CANADA",
+                        SHPTOCTAC:" ",
+                        SHPTOPHON:"",
+                        SHPTOFAX:"",
+                        DATERATE:"2021-12-22",
+                        SWPROCPPD:0,
+                        AMTDUE:invoiceAmount,
+                        CUROPER:1,
+                        DRILLAPP:"",
+                        DRILLTYPE:0,
+                        DRILLDWNLK:0,
+                        GETIBSINFO:0,
+                        PROCESSCMD:0,
+                        SHPVIACODE:"",
+                        SHPVIADESC:"",
+                        PRPTYCODE:1,
+                        PRPTYVALUE:1,
+                        SWJOB:0,
+                        ERRBATCH:0,
+                        ERRENTRY:0,
+                        EMAIL:"",
+                        CTACPHONE:"",
+                        CTACFAX:"",	CTACEMAIL:"",
+                        AMTDSBWTAX:invoiceAmount,	
+                        AMTDSBNTAX:invoiceAmount,
+                        AMTDSCBASE:invoiceAmount,
+                        INVCTYPE:2,
+                        SWRTGINVC:0,
+                        RTGAPPLYTO:"",
+                        SWRTG:0,
+                        RTGAMT:0,
+                        RTGPERCENT:0,
+                        RTGDAYS:0,
+                        RTGDATEDUE:"",
+                        RTGTERMS:"",
+
                       });
                     } else {
                       non_data.push({
