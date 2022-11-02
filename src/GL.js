@@ -263,6 +263,7 @@ let GL = () => {
                     let data1 = res[0];
                     let data2 = res[1];
                     let data = [];
+                    let unmatched=[]
                     let rng = 0;
                     for (var item in data1) {
                       if (data1[item].ACCTDESC && data1[item].Amounts != -0) {
@@ -287,11 +288,15 @@ let GL = () => {
                             BATCHNBR: "000100",
                             JOURNALID: "00001",
                             TRANSNBR: count(rng),
-                            ACCTID: `${CodeY}${data1[item].ACCTID}`,
+                            ACCTID: ` `,
                             TRANSAMT: data1[item].Amounts,
                             TRANSDESC: "Opening Balances",
                             TRANSREF: "Opening Balances",
                           });
+                          unmatched.push({
+                            ACCTID: `${CodeY}${data1[item].ACCTID}`,
+                            ACCTDESC:data1[item].ACCTDESC
+                          })
                         }
                       }
                     }
@@ -357,7 +362,10 @@ let GL = () => {
                       },
                     ]);
                     const wb = XLSX.utils.book_new();
-
+                    const wbUnmatched = XLSX.utils.book_new();
+                    const wsUnmatch = XLSX.utils.json_to_sheet(unmatched);
+                    XLSX.utils.book_append_sheet(wbUnmatched,wsUnmatch,"unmatch")
+                    
                     XLSX.utils.book_append_sheet(wb, ws, "Journal_Headers");
                     XLSX.utils.book_append_sheet(wb, ws1, "Journal_Details");
                     XLSX.utils.book_append_sheet(
@@ -365,6 +373,7 @@ let GL = () => {
                       ws2,
                       "Journal_Detail_Optional_Fields"
                     );
+                  XLSX.writeFile(wbUnmatched, "unmatchedGL.xlsx");
                    XLSX.writeFile(wb, "GL.xlsx");
                     message.success("Successful");
                   }
