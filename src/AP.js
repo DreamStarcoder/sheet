@@ -60,6 +60,7 @@ let AP = () => {
     let processed = [];
     let check = false;
     let vendor = "";
+    let dateIndex=3
     csv.map((element) => {
       if (check) {
         if (element.length == 1) {
@@ -71,14 +72,14 @@ let AP = () => {
             processed.push({
               IDVENDOR: vendor,
               IDINVC: element[1],
-              DATEINVC:moment(element[3].getFullYear()+"-"+(element[3].getMonth() + 1)+"-"+(element[3].getDate()),'YYYY-MM-DD').format('YYYY-MM-DD'),
+              DATEINVC:moment(element[dateIndex].getFullYear()+"-"+(element[dateIndex].getMonth() + 1)+"-"+(element[dateIndex].getDate()),'YYYY-MM-DD').format('YYYY-MM-DD'),
               AMTDIST: element[5],
               DATEDUE: moment(
-                element[3].getFullYear() +
+                element[dateIndex].getFullYear() +
                   "-" +
-                  (element[3].getMonth() + 1) +
+                  (element[dateIndex].getMonth() + 1) +
                   "-" +
-                  element[3].getDate(),
+                  element[dateIndex].getDate(),
                 "YYYY-MM-DD"
               )
                 .add(30, "days")
@@ -88,6 +89,13 @@ let AP = () => {
         }
       }
       if (element.length > 3 && element[1] === " Source") {
+        element.map((item,index)=>{
+          switch(item.trim()){
+            case "Date":
+              dateIndex=index
+              break
+          }
+        })
         check = true;
       }
     });
