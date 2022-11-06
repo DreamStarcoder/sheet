@@ -237,7 +237,6 @@ let AR = () => {
                     let non_data = [];
                     let count = 1;
                     for (var item in data3) {
-                      console.table(data3[item]);
                       let found = data4.find((element) => {
                         if (
                           String(data3[item].IDCUST).trim() ===
@@ -248,6 +247,11 @@ let AR = () => {
                           String(element.NAMECUST)
                             .trim()
                             .includes(String(data3[item].IDCUST).trim())
+                            ||
+                            (
+                              String(data3[item].IDCUST).slice(0,4).toLocaleLowerCase()==
+                              String(element.NAMECUST).slice(0,4).toLocaleLowerCase()
+                            )
                         ) {
                           return element;
                         }
@@ -285,10 +289,10 @@ let AR = () => {
                           TERMCODE: "NET30",
                           SWTERMOVRD: 0,
                           DATEDUE: data3[item].DATEDUE,
-                          DATEDISC: " ",
-                          PCTDISC: 0,
-                          AMTDISCAVL: 0,
-                          LASTLINE: 1,
+                          // DATEDISC: " ",
+                          // PCTDISC: 0,
+                          // AMTDISCAVL: 0,
+                          // LASTLINE: 1,
                           CODESLSP1: "",
                           CODESLSP2: " ",
                           CODESLSP3: " ",
@@ -300,7 +304,7 @@ let AR = () => {
                           PCTSASPLT4: 0,
                           PCTSASPLT5: 0,
                           SWTAXBL: 1,
-                          SWMANTX: 0,
+                          SWMANTX: 1,
                           CODETAXGRP: "CANADA",
                           CODETAX1: "CANADA",
                           CODETAX2: "",
@@ -370,85 +374,85 @@ let AR = () => {
                           AMTDSBNTAX: invoiceAmount,
                           AMTDSCBASE: invoiceAmount,
                           INVCTYPE: 2,
-                          SWRTGINVC: 0,
-                          RTGAPPLYTO: "",
-                          SWRTG: 0,
-                          RTGAMT: 0,
-                          RTGPERCENT: 0,
-                          RTGDAYS: 0,
-                          RTGDATEDUE: "",
-                          RTGTERMS: "",
-                          SWRTGDDTOV: 0,
-                          SWRTGAMTOV: 0,
-                          SWRTGRATE: 0,
-                          VALUES: 2,
-                          SRCEAPPL: "AR",
-                          ARVERSION: "69A",
-                          TAXVERSION: 1,
-                          SWTXRTGRPT: 0,
-                          CODECURNRC: "CAD",
-                          SWTXCTLRC: 1,
-                          RATERC: 1,
-                          RATETYPERC: "",
-                          RATEDATERC: "",
-                          RATEOPRC: 1,
-                          SWRATERC: 0,
-                          TXAMT1RC: 0,
-                          TXAMT2RC: 0,
-                          TXAMT3RC: 0,
-                          TXAMT4RC: 0,
-                          TXAMT5RC: 0,
-                          TXTOTRC: 0,
-                          TXBSERT1TC: 0,
-                          TXBSERT2TC: 0,
-                          TXBSERT3TC: 0,
-                          TXBSERT4TC: 0,
-                          TXBSERT5TC: 0,
-                          TXAMTRT1TC: 0,
-                          TXAMTRT2TC: 0,
-                          TXAMTRT3TC: 0,
-                          TXAMTRT4TC: 0,
-                          TXAMTRT5TC: 0,
-                          TXBSE1HC: invoiceAmount,
-                          TXBSE2HC:0,
-                          TXBSE3HC: 0,
-                          TXBSE4HC: 0,
-                          TXBSE5HC: 0,
-                          TXBSE1HC: 0,
-                          TXAMT1HC: 0,
-                          TXAMT2HC: 0,
-                          TXAMT3HC: 0,
-                          TXAMT4HC: 0,
-                          TXAMT5HC: 0,
-                          AMTGROSHC: invoiceAmount,
-                          RTGAMTHC: 0,
-                          AMTDISCHC: 0,
-                          DISTNETHC: invoiceAmount,
-                          AMTPPDHC: 0,
-                          AMTDUEHC: invoiceAmount,
-                          SWPRTLBL: 0,
-                          TXTOTRTTC: 0,
-                          TXTOTAMT1: 0,
-                          TXTOTAMT2: 0,
-                          TXTOTAMT3: 0,
-                          TXTOTAMT4: 0,
-                          TXTOTAMT5: 0,
-                          RTGAMTDTL: 0,
-                          IDSHIPNBR: "",
-                          SWOECOST: 0,
-                          ENTEREDBY: "ADMIN",
-                          DATEBUS: "2022/10/30",
-                          EDN: "",
-                          AMTWHT1TC:0,
-                          AMTWHT2TC:0,
-                          AMTWHT3TC:0,
-                          AMTWHT4TC:0,
-                          AMTWHT5TC:0,
-                          SFPAURL:0,
-                          SFPAID: "",
-                          TXTOTWHT: 0,
-                          AMTDUEWHT:invoiceAmount,
-                          AMTDUEWHDS:invoiceAmount
+                          // SWRTGINVC: 0,
+                          // RTGAPPLYTO: "",
+                          // SWRTG: 0,
+                          // RTGAMT: 0,
+                          // RTGPERCENT: 0,
+                          // RTGDAYS: 0,
+                          // RTGDATEDUE: "",
+                          // RTGTERMS: "",
+                          // SWRTGDDTOV: 0,
+                          // SWRTGAMTOV: 0,
+                          // SWRTGRATE: 0,
+                          // VALUES: 2,
+                          // SRCEAPPL: "AR",
+                          // ARVERSION: "69A",
+                          // TAXVERSION: 1,
+                          // SWTXRTGRPT: 0,
+                          // CODECURNRC: "CAD",
+                          // SWTXCTLRC: 1,
+                          // RATERC: 1,
+                          // RATETYPERC: "",
+                          // RATEDATERC: "",
+                          // RATEOPRC: 1,
+                          // SWRATERC: 0,
+                          // TXAMT1RC: 0,
+                          // TXAMT2RC: 0,
+                          // TXAMT3RC: 0,
+                          // TXAMT4RC: 0,
+                          // TXAMT5RC: 0,
+                          // TXTOTRC: 0,
+                          // TXBSERT1TC: 0,
+                          // TXBSERT2TC: 0,
+                          // TXBSERT3TC: 0,
+                          // TXBSERT4TC: 0,
+                          // TXBSERT5TC: 0,
+                          // TXAMTRT1TC: 0,
+                          // TXAMTRT2TC: 0,
+                          // TXAMTRT3TC: 0,
+                          // TXAMTRT4TC: 0,
+                          // TXAMTRT5TC: 0,
+                          // TXBSE1HC: invoiceAmount,
+                          // TXBSE2HC:0,
+                          // TXBSE3HC: 0,
+                          // TXBSE4HC: 0,
+                          // TXBSE5HC: 0,
+                          // TXBSE1HC: 0,
+                          // TXAMT1HC: 0,
+                          // TXAMT2HC: 0,
+                          // TXAMT3HC: 0,
+                          // TXAMT4HC: 0,
+                          // TXAMT5HC: 0,
+                          // AMTGROSHC: invoiceAmount,
+                          // RTGAMTHC: 0,
+                          // AMTDISCHC: 0,
+                          // DISTNETHC: invoiceAmount,
+                          // AMTPPDHC: 0,
+                          // AMTDUEHC: invoiceAmount,
+                          // SWPRTLBL: 0,
+                          // TXTOTRTTC: 0,
+                          // TXTOTAMT1: 0,
+                          // TXTOTAMT2: 0,
+                          // TXTOTAMT3: 0,
+                          // TXTOTAMT4: 0,
+                          // TXTOTAMT5: 0,
+                          // RTGAMTDTL: 0,
+                          // IDSHIPNBR: "",
+                          // SWOECOST: 0,
+                          // ENTEREDBY: "ADMIN",
+                          // DATEBUS: "2022/10/30",
+                          // EDN: "",
+                          // AMTWHT1TC:0,
+                          // AMTWHT2TC:0,
+                          // AMTWHT3TC:0,
+                          // AMTWHT4TC:0,
+                          // AMTWHT5TC:0,
+                          // SFPAURL:0,
+                          // SFPAID: "",
+                          // TXTOTWHT: 0,
+                          // AMTDUEWHT:invoiceAmount,
+                          // AMTDUEWHDS:invoiceAmount
                         });
                          tab2.push({
                           CNTBTCH: 1,
@@ -587,6 +591,7 @@ let AR = () => {
                         })
                         count+=1
                       } else {
+
                         non_data.push({
                           REQUESTID: "9999",
                           IDCUST: data3[item].IDCUST,
@@ -607,7 +612,7 @@ let AR = () => {
                         });
                       }
                     }
-
+                    
                     const ws = XLSX.utils.json_to_sheet(data1);
                     const ws2 = XLSX.utils.json_to_sheet(tab2);
                     const ws3 = XLSX.utils.json_to_sheet(tab3);
@@ -666,6 +671,7 @@ let AR = () => {
                     XLSX.utils.book_append_sheet(wb, ws1, "non match");
 
                     XLSX.writeFile(wb, "AR.xlsx");
+                    
                   }
                 });
               } catch (err) {}

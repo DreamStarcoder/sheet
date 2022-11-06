@@ -207,7 +207,6 @@ let AP = () => {
             try {
                Promise.all([handleUpload(3, file3),handleUpload(4,file4)]).then(res=>{
                 if(res.length>=1){
-                  let data1 = [];
                   let sheet1=[]
                   let sheet2=[]
                   let sheet3=[]
@@ -220,7 +219,11 @@ let AP = () => {
                     let found = data4.find(
                       (element) =>
                       String(data3[item].IDVENDOR).trim() === String(element.NAMEVENDOR).trim()||
-                      String(data3[item].IDVENDOR).trim().includes(String(element.NAMEVENDOR).trim())
+                      String(data3[item].IDVENDOR).trim().includes(String(element.NAMEVENDOR).trim()) ||
+                      (
+                        String(data3[item].IDVENDOR).slice(0,4).toLocaleLowerCase()==
+                        String(element.NAMEVENDOR).slice(0,4).toLocaleLowerCase()
+                      )
                     );
                     if (found) {
                       let invoiceAmount=data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST
