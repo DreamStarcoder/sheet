@@ -614,7 +614,7 @@ let AR = () => {
                       }
                     }
                     //final
-                    Excel.r
+                    
                     const ws = XLSX.utils.json_to_sheet(data1);
                     const ws2 = XLSX.utils.json_to_sheet(tab2);
                     const ws3 = XLSX.utils.json_to_sheet(tab3);
@@ -665,19 +665,30 @@ let AR = () => {
                     }])
                     const ws1 = XLSX.utils.json_to_sheet(non_data);
                     const wb = XLSX.utils.book_new();
-                    wb.Workbook.Names({
-                      Name:"Invoice_Payment_Schedules",
-                      ref:"=Invoice_Payment_Schedules!$A$1:$A$15"
-                    })
+                   
                     XLSX.utils.book_append_sheet(wb, ws, "Invoices");
                     XLSX.utils.book_append_sheet(wb, ws2, "Invoice_Details");
                     XLSX.utils.book_append_sheet(wb, ws3, "Invoice_Payment_Schedules");
                     XLSX.utils.book_append_sheet(wb, ws4, "Invoice_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws5, "Invoice_Detail_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws1, "non match");
-                    
-                    XLSX.writeFile(wb, "AR.xlsx");
-                    
+                  let range=(sheetName,length,rLength)=>{
+                    let range=XLSX.utils.decode_range(wb.Sheets[sheetName]['!ref'])
+                    range.s.c = 0; // 0 == XLSX.utils.decode_col("A")
+                    range.e.c =length; // 6 == XLSX.utils.decode_col("G")
+                    range.s.r=1
+                    range.e.r=rLength
+                    var new_range = XLSX.utils.encode_range(range);
+                    XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {blankRows: false, defval: '', range: new_range})
+                  }
+                  range(wb.SheetNames[0],Object.keys(data1).length,data1.length)
+                  range(wb.SheetNames[1],Object.keys(tab2).length,tab2.length)
+                  range(wb.SheetNames[2],Object.keys(tab3).length,tab3.length)
+                  range(wb.SheetNames[3],19,0)
+                  range(wb.SheetNames[4],20,0)
+                  
+                  XLSX.writeFile(wb, "AR.xlsx");
+                  
                   }
                 });
               } catch (err) {}
