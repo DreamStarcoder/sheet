@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import { Button, Divider, Menu, Dropdown } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
+
 import { Zoom } from "react-reveal";
 let AR = () => {
   let [file3, setfile3] = useState("");
@@ -612,7 +613,8 @@ let AR = () => {
                         });
                       }
                     }
-                    
+                    //final
+                    Excel.r
                     const ws = XLSX.utils.json_to_sheet(data1);
                     const ws2 = XLSX.utils.json_to_sheet(tab2);
                     const ws3 = XLSX.utils.json_to_sheet(tab3);
@@ -663,13 +665,17 @@ let AR = () => {
                     }])
                     const ws1 = XLSX.utils.json_to_sheet(non_data);
                     const wb = XLSX.utils.book_new();
+                    wb.Workbook.Names({
+                      Name:"Invoice_Payment_Schedules",
+                      ref:"=Invoice_Payment_Schedules!$A$1:$A$15"
+                    })
                     XLSX.utils.book_append_sheet(wb, ws, "Invoices");
                     XLSX.utils.book_append_sheet(wb, ws2, "Invoice_Details");
                     XLSX.utils.book_append_sheet(wb, ws3, "Invoice_Payment_Schedules");
                     XLSX.utils.book_append_sheet(wb, ws4, "Invoice_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws5, "Invoice_Detail_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws1, "non match");
-
+                    
                     XLSX.writeFile(wb, "AR.xlsx");
                     
                   }
