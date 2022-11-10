@@ -672,22 +672,37 @@ let AR = () => {
                     XLSX.utils.book_append_sheet(wb, ws4, "Invoice_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws5, "Invoice_Detail_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws1, "non match");
-                  let range=(sheetName,length,rLength)=>{
-                    let range=XLSX.utils.decode_range(wb.Sheets[sheetName]['!ref'])
-                    range.s.c = 0; // 0 == XLSX.utils.decode_col("A")
-                    range.e.c =length; // 6 == XLSX.utils.decode_col("G")
-                    range.s.r=1
-                    range.e.r=rLength
-                    var new_range = XLSX.utils.encode_range(range);
-                    XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {blankRows: false, defval: '', range: new_range})
-                  }
-                  range(wb.SheetNames[0],Object.keys(data1).length,data1.length)
-                  range(wb.SheetNames[1],Object.keys(tab2).length,tab2.length)
-                  range(wb.SheetNames[2],Object.keys(tab3).length,tab3.length)
-                  range(wb.SheetNames[3],19,0)
-                  range(wb.SheetNames[4],20,0)
-                  
-                  XLSX.writeFile(wb, "AR.xlsx");
+                   
+                    wb.Workbook={}
+                    wb.Workbook['Names']=[{
+                      Sheet:null,
+                      Name:'Invoices',
+                      Ref:'Invoices!$A$1:$DC$45'
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Invoice_Payment_Schedules',
+                      Ref:'Invoice_Payment_Schedules!$A$1:$E$45'
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Invoice_Detail_Optional_Fields',
+                      Ref:'Invoice_Detail_Optional_Fields!$A$1:$U$1'
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Invoice_Details',
+                      Ref:'Invoice_Details!$A$1:$AP$45'
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Invoice_Optional_Fields',
+                      Ref:'Invoice_Optional_Fields!$A$1:$T$1'
+                    }
+                  ]
+                    
+                
+                 XLSX.writeFile(wb, "AR.xlsx");
                   
                   }
                 });
