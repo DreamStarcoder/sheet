@@ -672,17 +672,16 @@ let AR = () => {
                     XLSX.utils.book_append_sheet(wb, ws4, "Invoice_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws5, "Invoice_Detail_Optional_Fields");
                     XLSX.utils.book_append_sheet(wb, ws1, "non match");
-                   
                     wb.Workbook={}
                     wb.Workbook['Names']=[{
                       Sheet:null,
                       Name:'Invoices',
-                      Ref:'Invoices!$A$1:$DC$45'
+                      Ref:`Invoices!$A$1:$DC$${data1.length+1}`
                     },
                     {
                       Sheet:null,
                       Name:'Invoice_Payment_Schedules',
-                      Ref:'Invoice_Payment_Schedules!$A$1:$E$45'
+                      Ref:`Invoice_Payment_Schedules!$A$1:$E$${data1.length+1}`
                     },
                     {
                       Sheet:null,
@@ -692,7 +691,7 @@ let AR = () => {
                     {
                       Sheet:null,
                       Name:'Invoice_Details',
-                      Ref:'Invoice_Details!$A$1:$AP$45'
+                      Ref:`Invoice_Details!$A$1:$AP$${data1.length+1}`
                     },
                     {
                       Sheet:null,
