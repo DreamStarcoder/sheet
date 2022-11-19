@@ -373,6 +373,23 @@ let GL = () => {
                       ws2,
                       "Journal_Detail_Optional_Fields"
                     );
+                    wb.Workbook={}
+                    wb.Workbook['Names']=[{
+                      Sheet:null,
+                      Name:'Journal_Headers',
+                      Ref:`Journal_Headers!$A$1:$H$3`
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Journal_Details',
+                      Ref:`Journal_Details!$A$1:$G$${data.length+1}`
+                    },
+                    {
+                      Sheet:null,
+                      Name:'Journal_Detail_Optional_Fields',
+                      Ref:'Journal_Detail_Optional_Fields!$A$1:$U$1'
+                    }
+                  ]
                   XLSX.writeFile(wbUnmatched, "unmatchedGL.xlsx");
                    XLSX.writeFile(wb, "GL.xlsx");
                     message.success("Successful");

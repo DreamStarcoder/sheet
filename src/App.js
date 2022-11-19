@@ -1,6 +1,6 @@
 
 import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Divider, message, Tabs } from 'antd';
 import GL from './GL';
 import AR from './AR';
@@ -8,6 +8,7 @@ import AP from './AP';
 import Login from './Login';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
+import PayRoll from './PayRoll';
 const { TabPane } = Tabs;
 
 function callback(key) {
@@ -81,7 +82,9 @@ function App() {
       <TabPane tab="AP Trial Balance" key="3">
         <AP />
       </TabPane>
-     
+      <TabPane tab="Payroll" key="4">
+        <PayRoll />
+      </TabPane>
     </Tabs>
     
     </div>
