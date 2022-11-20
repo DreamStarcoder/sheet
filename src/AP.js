@@ -252,7 +252,7 @@ let AP = () => {
                         SWMANRTE: 0,
                         EXCHRATEHC:1,
                         ORIGRATEHC:0,
-                        TERMCODE: 'NET30',
+                        TERMCODE: data3[item].AMTDIST < 0 ?"":"NET30",
                         SWTERMOVRD: '0',
                         DATEDUE: data3[item].DATEDUE,
                         SWTAXBL: 1,
