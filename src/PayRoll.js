@@ -125,11 +125,11 @@ let  filePathset2=(e)=> {
         let object=[]
         let sheet2=[]
         let grossIndex=2
-        let DPSPIndex=10
+        let DPSPIndex=14
         let RSSPIndex=-1
         let CPPIndex=10
         let TaxIndex=10
-       
+        console.log(data4[0])
         data4.map((item,index)=>{
            
           if(item.indexOf("Gross")!==-1){
@@ -183,7 +183,7 @@ let  filePathset2=(e)=> {
                 HOURS:0,	
                 ECNTBASE:0,
                 ERATE:0	,
-                EEXTEND:item[grossIndex],
+                EEXTEND:Number(item[grossIndex])+Number(item[DPSPIndex]),
                 EREGRATE:0,	
                 RCNTBASE:0,
                 RRATE:0,
@@ -213,6 +213,50 @@ let  filePathset2=(e)=> {
                 TAXREPAY:0	,
                 CHECKDATE:item[2]
               })
+              if(Number(item[DPSPIndex+1])>0){
+                sheet2.push({
+                    EMPLOYEE:element[0],	
+                    PEREND:item[2]	,
+                    ENTRYSEQ:0	,
+                    CATEGORY:4	,
+                    EARNDED	:'DPSPEM',
+                    LINETYPE:6	,
+                    LINENO:4,
+                    EARDEDDATE:item[2],
+                    HOURS:0,	
+                    ECNTBASE:0,
+                    ERATE:0	,
+                    EEXTEND: item[DPSPIndex+1],
+                    EREGRATE:0,	
+                    RRATE:0,
+                    RCNTBASE:0,
+                    REXTEND:0,
+                    WCC:'',
+                    TAXWEEKS:0,
+                    TAXEARNS:0,
+                    TXEARNCEIL:0,
+                    TAXTIPS:0,
+                    TXTIPSCEIL:0,
+                    TAXONTIPS:0,
+                    UNCOLLTAX:0	,
+                    TAXNONPER:0	,
+                    TAXEARNBD:0	,
+                    POOLEDTIPS:0 ,
+                    STARTTIME:0,
+                    STOPTIME:0,
+                    WCCGROUP:""	,
+                    LOCTAXCODE:"",
+                    WCBASE:0,
+                    WCRATE:0,
+                    WCEXTEND:0,
+                    CSEFTSTAT:0,
+                    DISTCODE:""	,
+                    DISTRNAME:"",
+                    TAXNONDED:0,
+                    TAXREPAY:0	,
+                    CHECKDATE:item[2]
+                  })
+              }
               if(Number(item[RSSPIndex])>0){
                 sheet2.push({
                   EMPLOYEE:element[0],	
@@ -256,6 +300,50 @@ let  filePathset2=(e)=> {
                   TAXREPAY:0	,
                   CHECKDATE:item[2]
                 })
+              }
+              if(Number(item[DPSPIndex])>0){
+                sheet2.push({
+                    EMPLOYEE:element[0],	
+                    PEREND:item[2]	,
+                    ENTRYSEQ:0	,
+                    CATEGORY:4	,
+                    EARNDED	:'DPSP',
+                    LINETYPE:6	,
+                    LINENO:4,
+                    EARDEDDATE:item[2],
+                    HOURS:0,	
+                    ECNTBASE:0,
+                    ERATE:0	,
+                    EEXTEND: item[DPSPIndex],
+                    EREGRATE:0,	
+                    RRATE:0,
+                    RCNTBASE:0,
+                    REXTEND:0,
+                    WCC:'',
+                    TAXWEEKS:0,
+                    TAXEARNS:0,
+                    TXEARNCEIL:0,
+                    TAXTIPS:0,
+                    TXTIPSCEIL:0,
+                    TAXONTIPS:0,
+                    UNCOLLTAX:0	,
+                    TAXNONPER:0	,
+                    TAXEARNBD:0	,
+                    POOLEDTIPS:0 ,
+                    STARTTIME:0,
+                    STOPTIME:0,
+                    WCCGROUP:""	,
+                    LOCTAXCODE:"",
+                    WCBASE:0,
+                    WCRATE:0,
+                    WCEXTEND:0,
+                    CSEFTSTAT:0,
+                    DISTCODE:""	,
+                    DISTRNAME:"",
+                    TAXNONDED:0,
+                    TAXREPAY:0	,
+                    CHECKDATE:item[2]
+                  })
               }
               
               sheet2.push({

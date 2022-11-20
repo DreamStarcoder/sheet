@@ -117,7 +117,7 @@ let GL = () => {
   let step2 = (csv) => {
     //return result; //JavaScript object
     let processed = [];
-    let check = false;
+    
 
     csv.map((element, index) => {
       if (index !== 0) {

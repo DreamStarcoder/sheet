@@ -69,6 +69,7 @@ let AP = () => {
           }
         } else {
           if (!element[0] && element[1]) {
+           
             processed.push({
               IDVENDOR: vendor,
               IDINVC: element[1],
@@ -226,8 +227,9 @@ let AP = () => {
                       )
                     );
                     if (found) {
+                      console.log(data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST)
                       let invoiceAmount=data3[item].AMTDIST<0?-(data3[item].AMTDIST):data3[item].AMTDIST
-                   
+                     
                       sheet1.push({
                         CNTBTCH: 1,
                         CNTITEM: count,
@@ -235,8 +237,8 @@ let AP = () => {
                         IDVEND: found.IDVENDOR,
                         IDINVC: data3[item].IDINVC,
                         IDRMITTO: '',
-                        TEXTTRX: 1,
-                        IDTRX: 12,
+                        TEXTTRX:data3[item].AMTDIST<0?3:1,
+                        IDTRX: data3[item].AMTDIST<0?32:12,
                         ORDRNBR: '',
                         PONBR: '',
                         INVCDESC: ' ',

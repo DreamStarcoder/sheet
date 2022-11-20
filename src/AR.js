@@ -263,6 +263,7 @@ let AR = () => {
                           data3[item].AMTDIST < 0
                             ? -data3[item].AMTDIST
                             : data3[item].AMTDIST;
+                        console.log(invoiceAmount)    
                         data1.push({
                           CNTBTCH: 1,
                           CNTITEM: count,
@@ -592,7 +593,7 @@ let AR = () => {
                         })
                         count+=1
                       } else {
-
+                   
                         non_data.push({
                           REQUESTID: "9999",
                           IDCUST: data3[item].IDCUST,
