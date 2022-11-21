@@ -129,6 +129,7 @@ let  filePathset2=(e)=> {
         let RSSPIndex=-1
         let CPPIndex=10
         let TaxIndex=10
+        let vacationIndex=
         console.log(data4[0])
         data4.map((item,index)=>{
            
@@ -147,15 +148,19 @@ let  filePathset2=(e)=> {
           RSSPIndex=item.indexOf("RRSP") 
           console.log() 
        }
+    
        if(item.indexOf("CPP")!==-1){
         CPPIndex=item.indexOf("CPP")
         console.log("CPP",CPPIndex)  
      }
-       
+     if(item.indexOf("Vacation Paid")!==-1){
+      vacationIndex=item.indexOf("Vacation Paid")
+      console.log("   Vacation Paid",vacationIndex)  
+   }
           nameData.find(element=>{ 
-            
+           
             if(item[0]==element[6]||item[0].split(',')[0]==element[6].split(',')[0]){
-             
+            
               object.push({
                 EMPLOYEE:element[0],
                 PEREND:item[2],
@@ -171,6 +176,94 @@ let  filePathset2=(e)=> {
                 CSEFTSTAT:0,
                 USERSEC:0
               })
+              if(Number(item[vacationIndex])>0){
+                sheet2.push({
+                  EMPLOYEE:element[0],	
+                  PEREND:item[2]	,
+                  ENTRYSEQ:0	,
+                  CATEGORY:1	,
+                  EARNDED	:'VACACR',
+                  LINETYPE:1	,
+                  LINENO:5	,
+                  EARDEDDATE:item[2],
+                  HOURS:0,	
+                  ECNTBASE:0,
+                  ERATE:0	,
+                  EEXTEND:Number(item[vacationIndex]),
+                  EREGRATE:0,	
+                  RCNTBASE:0,
+                  RRATE:0,
+                  REXTEND:0,
+                  WCC:'',
+                  TAXWEEKS:0,
+                  TAXEARNS:0,
+                  TXEARNCEIL:0,
+                  TAXTIPS:0,
+                  TXTIPSCEIL:0,
+                  TAXONTIPS:0,
+                  UNCOLLTAX:0	,
+                  TAXNONPER:0	,
+                  TAXEARNBD:0	,
+                  POOLEDTIPS:0 ,
+                  STARTTIME:0,
+                  STOPTIME:0,
+                  WCCGROUP:""	,
+                  LOCTAXCODE:"",
+                  WCBASE:0,
+                  WCRATE:0,
+                  WCEXTEND:0,
+                  CSEFTSTAT:0,
+                  DISTCODE:""	,
+                  DISTRNAME:"",
+                  TAXNONDED:0,
+                  TAXREPAY:0	,
+                  CHECKDATE:item[2]
+                })
+              }
+              if(Number(item[vacationIndex+1])>0){
+                sheet2.push({
+                  EMPLOYEE:element[0],	
+                  PEREND:item[2]	,
+                  ENTRYSEQ:0	,
+                  CATEGORY:1	,
+                  EARNDED	:'VACACR',
+                  LINETYPE:2	,
+                  LINENO:6	,
+                  EARDEDDATE:item[2],
+                  HOURS:0,	
+                  ECNTBASE:0,
+                  ERATE:0	,
+                  EEXTEND:Number(item[vacationIndex+1]),
+                  EREGRATE:0,	
+                  RCNTBASE:0,
+                  RRATE:0,
+                  REXTEND:0,
+                  WCC:'',
+                  TAXWEEKS:0,
+                  TAXEARNS:0,
+                  TXEARNCEIL:0,
+                  TAXTIPS:0,
+                  TXTIPSCEIL:0,
+                  TAXONTIPS:0,
+                  UNCOLLTAX:0	,
+                  TAXNONPER:0	,
+                  TAXEARNBD:0	,
+                  POOLEDTIPS:0 ,
+                  STARTTIME:0,
+                  STOPTIME:0,
+                  WCCGROUP:""	,
+                  LOCTAXCODE:"",
+                  WCBASE:0,
+                  WCRATE:0,
+                  WCEXTEND:0,
+                  CSEFTSTAT:0,
+                  DISTCODE:""	,
+                  DISTRNAME:"",
+                  TAXNONDED:0,
+                  TAXREPAY:0	,
+                  CHECKDATE:item[2]
+                })
+              }
               sheet2.push({
                 EMPLOYEE:element[0],	
                 PEREND:item[2]	,
