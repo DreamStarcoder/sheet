@@ -315,8 +315,8 @@ let GL = () => {
                       {
                         BATCHID: "000100",
                         BTCHENTRY: "00001",
-                        SRCELEDGER: "AR",
-                        SRCETYPE: "IN",
+                        SRCELEDGER: "GL",
+                        SRCETYPE: "JE",
                         FSCSYR: fsY,
                         FSCSPERD: PeriodF,
                         JRNLDESC: "Ship asap",
@@ -325,8 +325,8 @@ let GL = () => {
                       {
                         BATCHID: "000100",
                         BTCHENTRY: "00002",
-                        SRCELEDGER: "AR",
-                        SRCETYPE: "IN",
+                        SRCELEDGER: "GL",
+                        SRCETYPE: "JE",
                         FSCSYR: fsY,
                         FSCSPERD: PeriodF,
                         JRNLDESC: "Ship asap",
