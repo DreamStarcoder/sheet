@@ -270,7 +270,9 @@ let GL = () => {
                         let found = data2.find(
                           (element) =>
                            String(data1[item].ACCTDESC).trim() ==
-                           String(element.ACCTDESC).trim()
+                           String(element.ACCTDESC).trim() ||
+                           String(data1[item].ACCTDESC).trim().slice(0,6)==
+                           String(element.ACCTDESC).trim().slice(0,6)
                         );
                         rng += 20;
                         if (found) {
