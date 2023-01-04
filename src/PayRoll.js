@@ -13,6 +13,8 @@ let [file5Name,setFile2Name5]=useState('No File Selected')
 
 let [data4,setData] = useState([])
 let [nameData,setNameData] = useState([])
+let [maxCpp,setMaxCpp] = useState(64900)
+let [maxEI,setMaxEI] = useState(60300)
 let  filePathset3=(e)=> {
 
   e.stopPropagation();
@@ -140,6 +142,41 @@ let  filePathset2=(e)=> {
           style={{ display: 'none' }}
         />
        </div>
+       <div className="input2">
+      
+        <div>
+        <label className="label">Max CPP</label>
+        <label
+        htmlFor="myInput"
+        className="inputLabel2"
+        >
+       
+        </label>
+       <input
+          id="myInput"
+          type="number"
+          value={maxCpp}
+          onChange={(e)=>{console.log(e)}}
+        />
+        </div>
+        <div>
+        <label className="label">Max EI</label>
+        <label
+        htmlFor="myInput"
+        className="inputLabel2"
+        >
+       
+        </label>
+       <input
+          id="myInput"
+          type="number"
+          value={maxEI}
+          onChange={(e)=>{console.log(e)}}
+          
+        />
+        </div>
+       </div>
+      
        <p style={{backgroundColor:'red',width:100,margin:20,textAlign:'center'
        ,borderRadius:10,cursor:'pointer'}} onClick={()=>{
         let object=[]
@@ -211,13 +248,13 @@ let  filePathset2=(e)=> {
                 previous[element[0]]=wages[element[0]]
                 wages[element[0]]?wages[element[0]]=wages[element[0]]+wage:
                 wages[element[0]]=wage
-                if(wages[element[0]]>64900 && !cppMax[element[0]]){
-                 cppWage=64900-previous[element[0]]
+                if(wages[element[0]]>maxCpp && !cppMax[element[0]]){
+                 cppWage=maxCpp-previous[element[0]]
                  cppMax[element[0]]=true
                  console.log("CPP Diff",previous[element[0]],"max",wages[element[0]])
                 }
-                if(wages[element[0]]>60300 && !IMax[element[0]]){
-                  IWage=60300-previous[element[0]]
+                if(wages[element[0]]>maxEI && !IMax[element[0]]){
+                  IWage=maxEI-previous[element[0]]
                   IMax[element[0]]=true
                   console.log("EIR1 Diff",previous[element[0]],"max",wages[element[0]])
                  } 
@@ -478,7 +515,7 @@ let  filePathset2=(e)=> {
                    WCC:'',
                    TAXWEEKS:0,
                    TAXEARNS:wage,
-                   TXEARNCEIL:wages[element[0]]>64900?cppWage:wage,
+                   TXEARNCEIL:wages[element[0]]>maxCpp?cppWage:wage,
                    TAXTIPS:0,
                    TXTIPSCEIL:0,
                    TAXONTIPS:0,
@@ -520,7 +557,7 @@ let  filePathset2=(e)=> {
                    WCC:'',
                    TAXWEEKS:0,
                    TAXEARNS:wage,
-                   TXEARNCEIL:wages[element[0]]>60300?IWage:wage,
+                   TXEARNCEIL:wages[element[0]]>maxEI?IWage:wage,
                    TAXTIPS:0,
                    TXTIPSCEIL:0,
                    TAXONTIPS:0,

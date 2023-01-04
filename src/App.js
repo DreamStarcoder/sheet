@@ -25,7 +25,7 @@ let DropdownComponent=()=>{
     <Dropdown.Item ><NavLink to="/">Sage300</NavLink></Dropdown.Item>
     <Dropdown.Item ><NavLink to="/sage50">Sage50</NavLink></Dropdown.Item>
    <Dropdown.Item > <NavLink to="/adagio">Adagio</NavLink></Dropdown.Item>
-   <Dropdown.Item ><NavLink to="/paymentclaim">Payment Claim</NavLink></Dropdown.Item>
+   <Dropdown.Item ><NavLink to="/paymentacclaim">Paymate Acclaim</NavLink></Dropdown.Item>
   </DropdownButton>
   </div>
   }
@@ -92,7 +92,7 @@ let DropdownComponent=()=>{
         <Route path='/' element={<Sage300/>}/>
         <Route path='/sage50' element={<Sage50/>}/>
         <Route path='/adagio' element={<Adagio/>}/>
-        <Route path='/paymentclaim' element={<Paymentclaim/>}/>
+        <Route path='/paymentacclaim' element={<Paymentclaim/>}/>
       </Routes> 
     
     </div>
@@ -148,7 +148,7 @@ let Adagio=()=>{
 let Paymentclaim=()=>{
   return <div>
     <h2 className='titlep'>
-    Payment Claim
+    Paymate Acclaim
     </h2>
     <div className='cdiv'>
       <h1 >
