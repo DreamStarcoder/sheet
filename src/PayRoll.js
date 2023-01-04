@@ -22,7 +22,7 @@ let  filePathset3=(e)=> {
 
   setFileName4(f.name)
     var reader = new FileReader();
-   let p= Promise((resolve, reject) => {
+   let p=new Promise((resolve, reject) => {
       reader.onload=function(e){
         var data4 = e.target.result;
         let readedData = XLSX.read(data4, {type: 'binary', cellDates: true,raw:false});
