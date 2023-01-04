@@ -9,13 +9,26 @@ import Login from './Login';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import PayRoll from './PayRoll';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 const { TabPane } = Tabs;
 
 function callback(key) {
   console.log(key);
 }
 
-function App() {
+let App=()=> {
+
+let DropdownComponent=()=>{
+    return <div>  <DropdownButton id="dropdown-basic-button" title="Select Accounting System">
+    <Dropdown.Item ><NavLink to="/">Sage300</NavLink></Dropdown.Item>
+    <Dropdown.Item ><NavLink to="/sage50">Sage50</NavLink></Dropdown.Item>
+   <Dropdown.Item > <NavLink to="/adagio">Adagio</NavLink></Dropdown.Item>
+   <Dropdown.Item ><NavLink to="/paymentclaim">Payment Claim</NavLink></Dropdown.Item>
+  </DropdownButton>
+  </div>
+  }
   let [login,setLogin]=useState(false)
   let data=localStorage.getItem("license-expiry")
   useEffect(()=>{
@@ -28,15 +41,17 @@ function App() {
     }
   })
   return (
-    <div className="App">
-  
+    <HashRouter className="App">
      {
       login &&  <div>
+      
       <div className='header'>
       <div className='logos'>
       <img src={process.env.PUBLIC_URL+'\\logo.png'} className="logo" alt="AGS LOGO"  />
       <img src={process.env.PUBLIC_URL+'\\tblogo.png'} className="tb-logo" alt="AGS LOGO"  />
+      <DropdownComponent />
       </div>  
+      
       <div className='license'>
    
       <p className='token'>Expiry Date {JSON.parse(data).data.expire_date}</p>
@@ -69,23 +84,16 @@ function App() {
         
       
       }}>Logout</Button>
-      </div> 
+      </div>
+      
       </div>
       <Divider/>
-       <Tabs tabPosition='left' defaultActiveKey="1" onChange={callback}>
-      <TabPane tab="GL Trial Balance" key="1">
-      <GL/>
-      </TabPane>
-      <TabPane tab="AR Trail Balance" key="2">
-       <AR />
-      </TabPane>
-      <TabPane tab="AP Trial Balance" key="3">
-        <AP />
-      </TabPane>
-      <TabPane tab="Payroll" key="4">
-        <PayRoll />
-      </TabPane>
-    </Tabs>
+      <Routes>
+        <Route path='/' element={<Sage300/>}/>
+        <Route path='/sage50' element={<Sage50/>}/>
+        <Route path='/adagio' element={<Adagio/>}/>
+        <Route path='/paymentclaim' element={<Paymentclaim/>}/>
+      </Routes> 
     
     </div>
      }
@@ -94,9 +102,59 @@ function App() {
      }
       <img  src={process.env.PUBLIC_URL+'\\partner.png'} className="partner-logo" alt="AGS LOGO"  />
      
-    </div>
+    </HashRouter>
     
   );
 }
-
+let Sage300= ()=>{
+  return <div>
+  <h2 className='titlep'>Sage 300</h2>
+  <Tabs tabPosition='left' defaultActiveKey="1" onChange={callback}>
+  <TabPane tab="GL Trial Balance" key="1">
+  <GL/>
+  </TabPane>
+  <TabPane tab="AR Trail Balance" key="2">
+   <AR />
+  </TabPane>
+  <TabPane tab="AP Trial Balance" key="3">
+    <AP />
+  </TabPane>
+  <TabPane tab="Payroll" key="4">
+    <PayRoll />
+  </TabPane>
+</Tabs>
+</div>
+}
+let Sage50=()=>{
+  return <div>
+    <h2 className='titlep'>Sage 50</h2>
+    <div className='cdiv'>
+      <h1 >
+        Coming Soon
+      </h1>
+    </div>
+  </div>
+}
+let Adagio=()=>{
+  return <div>
+    <h2 className='titlep'>Adagio</h2> 
+    <div className='cdiv'>
+      <h1 >
+        Coming Soon
+      </h1>
+    </div>
+  </div>
+}
+let Paymentclaim=()=>{
+  return <div>
+    <h2 className='titlep'>
+    Payment Claim
+    </h2>
+    <div className='cdiv'>
+      <h1 >
+        Coming Soon
+      </h1>
+    </div>
+  </div>
+}
 export default App;

@@ -17,44 +17,54 @@ let  filePathset3=(e)=> {
 
   e.stopPropagation();
   e.preventDefault();
+
   var f = e.target.files[0]
 
   setFileName4(f.name)
     var reader = new FileReader();
-    reader.onload=function(e){
-      var data4 = e.target.result;
-      let readedData = XLSX.read(data4, {type: 'binary', cellDates: true,raw:false});
-      const wsname = readedData.SheetNames[0];
-      const ws = readedData.Sheets[wsname];
-      /* Convert array to json*/
-      const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
-      let getHeader=[]
-      dataParse.map((item,index)=>{
-        if(item.find(item=>item=="Date")){
-          getHeader= dataParse.slice(index,dataParse.length)
-        }
-      })
-      let name="Name"
-      let cleanData=[]
-      getHeader.map((item,index)=>{
-        if(item.length==1){
-          if(item[0]){
-            name=item[0]
+   let p= Promise((resolve, reject) => {
+      reader.onload=function(e){
+        var data4 = e.target.result;
+        let readedData = XLSX.read(data4, {type: 'binary', cellDates: true,raw:false});
+        const wsname = readedData.SheetNames[0];
+        const ws = readedData.Sheets[wsname];
+        /* Convert array to json*/
+        const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
+        let getHeader=[]
+        dataParse.map((item,index)=>{
+          if(item.find(item=>item=="Date")){
+            getHeader= dataParse.slice(index,dataParse.length)
           }
-        }else{
-          if(item.find(element=>element=="Total" || element=="Grand Total" ) || item.length==0){
-            getHeader.splice(index,1)
+        })
+        let name="Name"
+        let cleanData=[]
+        getHeader.map((item,index)=>{
+          if(item.length==1){
+            if(item[0]){
+              name=item[0]
+            }
           }else{
-           
-           item.unshift(name)
-            cleanData.push(item)
+            if(item.find(element=>element=="Total" || element=="Grand Total" ) || item.length==0){
+              getHeader.splice(index,1)
+            }else{
+             
+             item.unshift(name)
+              cleanData.push(item)
+            }
           }
-        }
-      })
-      setData(cleanData)
-    }
-    reader.readAsBinaryString(f)
-
+        })
+        setData(cleanData)
+        resolve(true)
+      }
+      reader.readAsBinaryString(f)
+  
+    })
+    p.then(p=>{
+      console.log(p)
+     }).catch(err=>{
+      console.log(err)
+     })
+   
 }
 let  filePathset2=(e)=> {
   e.stopPropagation();
@@ -62,22 +72,30 @@ let  filePathset2=(e)=> {
   var f = e.target.files[0]
     setFile2Name5(f.name)
     var reader = new FileReader();
-    reader.onload=function(e){
-      var data4 = e.target.result;
+   let p=new Promise((resolve, reject) => {
+      reader.onload=function(e){
+        var data4 = e.target.result;
+       
+          let readedData = XLSX.read(data4, {type: 'binary', cellDates: true,raw:false});
+          const wsname = readedData.SheetNames[0];
+          const ws = readedData.Sheets[wsname];
+          /* Convert array to json*/
+        const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
+        let temp=[]
+        dataParse.map(element=>{
+          temp.push(element)
+        })
      
-        let readedData = XLSX.read(data4, {type: 'binary', cellDates: true,raw:false});
-        const wsname = readedData.SheetNames[0];
-        const ws = readedData.Sheets[wsname];
-        /* Convert array to json*/
-      const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
-      let temp=[]
-      dataParse.map(element=>{
-        temp.push(element)
-      })
-   
-      setNameData(temp)
-    }
-    reader.readAsBinaryString(f)
+        setNameData(temp)
+        resolve(true)
+      }
+      reader.readAsBinaryString(f)
+    })
+     p.then(p=>{
+      console.log(p)
+     }).catch(err=>{
+      console.log(err)
+     })
 }
 
 
@@ -202,7 +220,7 @@ let  filePathset2=(e)=> {
                   IWage=60300-previous[element[0]]
                   IMax[element[0]]=true
                   console.log("EIR1 Diff",previous[element[0]],"max",wages[element[0]])
-                 }
+                 } 
                 
                  object.push({
                    EMPLOYEE:element[0],
