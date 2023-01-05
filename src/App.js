@@ -22,8 +22,7 @@ let App=()=> {
 
 let DropdownComponent=()=>{
     return <div>  <DropdownButton id="dropdown-basic-button" title="Select Accounting System">
-    <Dropdown.Item ><NavLink to="/">Sage300</NavLink></Dropdown.Item>
-    <Dropdown.Item ><NavLink to="/sage50">Sage50</NavLink></Dropdown.Item>
+   <Dropdown.Item ><NavLink to="/">Sage50</NavLink></Dropdown.Item>
    <Dropdown.Item > <NavLink to="/adagio">Adagio</NavLink></Dropdown.Item>
    <Dropdown.Item ><NavLink to="/paymentacclaim">Paymate Acclaim</NavLink></Dropdown.Item>
   </DropdownButton>
@@ -90,7 +89,6 @@ let DropdownComponent=()=>{
       <Divider/>
       <Routes>
         <Route path='/' element={<Sage300/>}/>
-        <Route path='/sage50' element={<Sage50/>}/>
         <Route path='/adagio' element={<Adagio/>}/>
         <Route path='/paymentacclaim' element={<Paymentclaim/>}/>
       </Routes> 
@@ -108,7 +106,7 @@ let DropdownComponent=()=>{
 }
 let Sage300= ()=>{
   return <div>
-  <h2 className='titlep'>Sage 300</h2>
+  <h2 className='titlep'>Sage50</h2>
   <Tabs tabPosition='left' defaultActiveKey="1" onChange={callback}>
   <TabPane tab="GL Trial Balance" key="1">
   <GL/>
@@ -125,16 +123,7 @@ let Sage300= ()=>{
 </Tabs>
 </div>
 }
-let Sage50=()=>{
-  return <div>
-    <h2 className='titlep'>Sage 50</h2>
-    <div className='cdiv'>
-      <h1 >
-        Coming Soon
-      </h1>
-    </div>
-  </div>
-}
+
 let Adagio=()=>{
   return <div>
     <h2 className='titlep'>Adagio</h2> 
@@ -148,7 +137,7 @@ let Adagio=()=>{
 let Paymentclaim=()=>{
   return <div>
     <h2 className='titlep'>
-    Paymate Acclaim
+    Payment Acclaim
     </h2>
     <div className='cdiv'>
       <h1 >
