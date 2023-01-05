@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
 import { Button, Menu, Dropdown, message, Divider } from "antd";
@@ -7,7 +7,7 @@ import { Zoom } from "react-reveal";
 
 let GL = () => {
   let [fsY, setfsY] = useState("");
-  let [CodeY, setCode] = useState("");
+  let [CodeY, setCode] = useState(9999);
   let [PeriodF, setPeriodF] = useState("");
   let Company = [
     "01",
@@ -40,7 +40,8 @@ let GL = () => {
     "11",
     "12",
   ];
-  let FiscalYear = ["2023", "2022", "2021", "2022", "2019"];
+  let FiscalYear = ["2028","2027","2026",
+  "2025","2024","2023", "2022", "2021", "2020"].reverse();
   let [file, setfile] = useState("");
   let [file2, setfile2] = useState("");
   let [file1Name, setFile1Name] = useState("No File Selected");
@@ -89,7 +90,11 @@ let GL = () => {
       reader.readAsBinaryString(f);
     });
   };
-
+  useEffect(()=>{
+    if(localStorage.getItem("code")){
+      setCode(localStorage.getItem("code"))
+    }
+  },[])
   let step1 = (csv) => {
     //return result; //JavaScript object
     let processed = [];
@@ -183,12 +188,13 @@ let GL = () => {
               style={{ float: "right" }}
               overlay={
                 <Menu>
-                  {FiscalYear.map((element) => {
+                  {FiscalYear.map((element,i) => {
                     return (
                       <Menu.Item
                         onClick={() => {
                           setfsY(element);
                         }}
+                        key={i}
                       >
                         {element}
                       </Menu.Item>
@@ -199,7 +205,7 @@ let GL = () => {
             >
               Fiscal Year
             </Dropdown.Button>
-            <Dropdown.Button
+            {/* <Dropdown.Button
               style={{ float: "right" }}
               overlay={
                 <Menu>
@@ -207,7 +213,7 @@ let GL = () => {
                     return (
                       <Menu.Item
                         onClick={() => {
-                          setCode(element);
+                        
                         }}
                       >
                         {element}
@@ -218,17 +224,19 @@ let GL = () => {
               }
             >
               Company Code
-            </Dropdown.Button>
+            </Dropdown.Button> */}
+      
             <Dropdown.Button
               style={{ float: "right" }}
               overlay={
                 <Menu>
-                  {Period.map((element) => {
+                  {Period.map((element,index) => {
                     return (
                       <Menu.Item
                         onClick={() => {
                           setPeriodF(element);
                         }}
+                        key={index}
                       >
                         {element}
                       </Menu.Item>
@@ -239,6 +247,25 @@ let GL = () => {
             >
               Fiscal Period
             </Dropdown.Button>
+            
+          </div>
+          <div className="input" style={{justifyContent:'normal'}}>
+          <label className="label">Company Code</label>
+        <label
+        htmlFor="myInput"
+        className="inputLabel2"
+        >
+       
+        </label>
+       <input
+          id="myInput"
+          type="number"
+          value={CodeY}
+          onChange={(e)=>{
+            setCode(e.target.valueAsNumber)
+            localStorage.setItem('code',e.target.valueAsNumber)
+          }}
+          />
           </div>
           <div>
             <p>

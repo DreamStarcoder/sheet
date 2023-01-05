@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import * as XLSX from "xlsx";
 import { Button, Divider, message,Menu, Dropdown } from "antd";
@@ -10,10 +10,14 @@ let AP = () => {
   let [file4, setfile4] = useState("");
   let [file3Name, Setfile3Name] = useState("No file selected");
   let [file4Name, Setfile4Name] = useState("No file selected");
-  let [CodeY,setCode]=useState('')    
+  let [CodeY,setCode]=useState(9999)    
 
   let Company=["01","02","03","04","05","07","08","09","10","11","12","13","14","15","16"]
-
+  useEffect(()=>{
+    if(localStorage.getItem("code")){
+      setCode(localStorage.getItem("code"))
+    }
+  },[])
   
   let filePathset = (e, step) => {
     e.stopPropagation();
@@ -183,7 +187,8 @@ let AP = () => {
         />
        </div>
          <div>
-         <Dropdown.Button
+
+         {/* <Dropdown.Button
         style={{ float: 'right' }}
         overlay={<Menu>
           {
@@ -196,8 +201,25 @@ let AP = () => {
         </Menu>}
       >
         Company Code
-      </Dropdown.Button>
+      </Dropdown.Button> */}
+        <div className="input" style={{justifyContent:'normal'}}>
+          <label className="label">Company Code</label>
+        <label
+        htmlFor="myInput"
+        className="inputLabel2"
+        >
        
+        </label>
+       <input
+          id="myInput"
+          type="number"
+          value={CodeY}
+          onChange={(e)=>{
+            setCode(e.target.valueAsNumber)
+            localStorage.setItem('code',e.target.valueAsNumber)
+          }}
+          />
+          </div>
          </div>
    <div>
    <p>Company Code is {CodeY}</p>

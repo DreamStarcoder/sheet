@@ -1,7 +1,7 @@
 
 import './App.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as XLSX from "xlsx";
 import { Zoom } from 'react-reveal';
 import moment from 'moment';
@@ -99,7 +99,14 @@ let  filePathset2=(e)=> {
       console.log(err)
      })
 }
-
+useEffect(()=>{
+  if(localStorage.getItem('mc')){
+    setMaxCpp(localStorage.getItem('mc'))
+  }
+  if(localStorage.getItem('me')){
+    setMaxEI(localStorage.getItem('me'))
+  }
+},[])
 
   return (
     <Zoom className="App">
@@ -156,7 +163,10 @@ let  filePathset2=(e)=> {
           id="myInput"
           type="number"
           value={maxCpp}
-          onChange={(e)=>{console.log(e)}}
+          onChange={(e)=>{
+            localStorage.setItem('mc',e.target.valueAsNumber)
+            setMaxCpp(e.target.valueAsNumber)
+          }}
         />
         </div>
         <div>
@@ -171,7 +181,10 @@ let  filePathset2=(e)=> {
           id="myInput"
           type="number"
           value={maxEI}
-          onChange={(e)=>{console.log(e)}}
+          onChange={(e)=>{
+            setMaxEI(e.target.valueAsNumber)
+            localStorage.setItem('me',e.target.valueAsNumber)
+          }}
           
         />
         </div>
