@@ -166,6 +166,10 @@ padding-left: 10px;
 .input2{
    display: flex;
 }
+.input3{
+  display: flex;
+  width: 50%;
+}
 .input2>div{
   margin: 10px;
 }
@@ -176,4 +180,41 @@ input{
   width: 200px;
   padding: 10px;
   z-index: 1;
+}
+.select-container {
+  width: 200px; /* Set the width of the dropdown */
+  position: relative;
+  display: inline-block;
+}
+
+/* Style the dropdown select element */
+.select-container select {
+  width: 100%;
+  padding: 10px; /* Add padding for better readability and appearance */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Add rounded corners */
+  outline: none; /* Remove the default focus outline */
+  appearance: none; /* Remove the default dropdown arrow on some browsers */
+  background-color: #fff; /* Set the background color */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+/* Style the dropdown arrow */
+.select-container select::after {
+  content: '\25BC'; /* Unicode character for a down arrow ▼ */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* Style the dropdown options */
+.select-container select option {
+  padding: 10px; /* Add padding to individual options */
+}
+
+/* Style the dropdown on hover/focus */
+.select-container select:hover,
+.select-container select:focus {
+  border-color: #007bff; /* Change border color on hover/focus */
 }
